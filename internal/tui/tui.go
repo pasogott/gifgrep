@@ -353,7 +353,7 @@ func handleQueryInput(state *appState, ev inputEvent, out *bufio.Writer, prefetc
 		state.query += string(ev.ch)
 		state.renderDirty = true
 	case keyBackspace:
-		if len(state.query) > 0 {
+		if state.query != "" {
 			state.query = state.query[:len(state.query)-1]
 			state.renderDirty = true
 		}
