@@ -8,6 +8,10 @@
   `--source klipy` is available directly, and `KLIPY_API_KEY` is now required for that provider.
   Thanks @ZeterMordio.
 
+### Fixes
+
+- Search: let `auto` fall back to KLIPY when a configured Giphy key fails.
+
 ## 0.2.3 - 2026-02-04
 ### Fixes
 - TUI: after download, preview reloads from the saved full-res GIF.

@@ -99,6 +99,39 @@ func TestFetchGiphy(t *testing.T) {
 	})
 }
 
+type giphyUnauthorizedTransport struct {
+	fallback testutil.FakeTransport
+}
+
+func (t *giphyUnauthorizedTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.URL.Host == "api.giphy.com" {
+		return &http.Response{
+			StatusCode: http.StatusUnauthorized,
+			Body:       io.NopCloser(strings.NewReader("unauthorized")),
+		}, nil
+	}
+	return t.fallback.RoundTrip(req)
+}
+
+func TestAutoFallsBackToKlipyWhenGiphyFails(t *testing.T) {
+	t.Setenv("GIPHY_API_KEY", "bad-key")
+	t.Setenv("KLIPY_API_KEY", "test-key")
+	gifData := testutil.MakeTestGIF()
+	testutil.WithTransport(t, &giphyUnauthorizedTransport{fallback: testutil.FakeTransport{GIFData: gifData}}, func() {
+		out, err := Search("cats", model.Options{Limit: 1, Source: "auto"})
+		if err != nil {
+			t.Fatalf("Search auto failed: %v", err)
+		}
+		if len(out) != 1 || !strings.Contains(out[0].URL, "example.test") {
+			t.Fatalf("expected Klipy fallback result, got %#v", out)
+		}
+
+		if _, err := Search("cats", model.Options{Limit: 1, Source: "giphy"}); err == nil {
+			t.Fatalf("expected explicit giphy to return auth error")
+		}
+	})
+}
+
 type badKlipyTransport struct{}
 
 func (t *badKlipyTransport) RoundTrip(_ *http.Request) (*http.Response, error) {
