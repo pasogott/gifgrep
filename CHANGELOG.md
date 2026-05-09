@@ -2,6 +2,12 @@
 
 ## 0.2.4 — Unreleased
 
+### Changes
+
+- Search: replace the Tenor API backend with KLIPY. `--source tenor` remains as a compatibility alias,
+  `--source klipy` is available directly, and `KLIPY_API_KEY` is now required for that provider.
+  Thanks @ZeterMordio.
+
 ## 0.2.3 - 2026-02-04
 ### Fixes
 - TUI: after download, preview reloads from the saved full-res GIF.
