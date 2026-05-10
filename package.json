@@ -8,6 +8,7 @@
     "fmt": "gofumpt -w .",
     "lint": "golangci-lint run",
     "snap": "node scripts/ghostty-web-snap.mjs",
+    "docs-site": "node scripts/build-docs-site.mjs",
     "build": "go build ./...",
     "test": "go test ./...",
     "check": "go vet ./..."

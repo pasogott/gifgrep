@@ -1,11 +1,26 @@
 <!doctype html>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>gifgrep</title>
-<meta http-equiv="refresh" content="0; url=/" />
-<script>
-  // GitHub Pages deep-link fix (single-page-ish sites).
-  // Redirect to / and keep the path in hash for manual debugging.
-  const path = location.pathname + location.search + location.hash;
-  location.replace("/#" + encodeURIComponent(path));
-</script>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Not found - gifgrep</title>
+  <style>
+    :root{color-scheme:light dark;--accent:#c2412f;--bg:#fafafa;--paper:#fff;--ink:#0f1115;--muted:#6b7280;--line:#e5e7eb}
+    @media(prefers-color-scheme:dark){:root{--bg:#0c0e14;--paper:#171a23;--ink:#f3f5f9;--muted:#8d96a4;--line:#262a36;--accent:#ff705c}}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+    main{width:min(92vw,520px);padding:32px;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+    h1{margin:0 0 8px;font-size:2rem;line-height:1.1;letter-spacing:0}
+    p{margin:0 0 18px;color:var(--muted)}
+    a{color:var(--accent);font-weight:600;text-decoration:none}
+    a:hover{text-decoration:underline;text-underline-offset:.2em}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Not found</h1>
+    <p>That gifgrep page does not exist.</p>
+    <a href="./">Go to docs home</a>
+  </main>
+</body>
+</html>

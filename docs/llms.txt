@@ -1,41 +1,32 @@
 # gifgrep
 
-gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY,
-prints scriptable URLs/JSON, and previews results inline in Kitty, Ghostty, or
-iTerm2. It also extracts still frames and contact sheets from GIFs locally.
+A tiny Go CLI/TUI for searching animated GIFs from GIPHY or KLIPY, piping URLs or JSON, and previewing results inline in modern terminals.
+
+Canonical documentation:
+- gifgrep: https://gifgrep.com/
+- Install: https://gifgrep.com/install.html
+- Quickstart: https://gifgrep.com/quickstart.html
+- Commands: https://gifgrep.com/commands.html
+- Search: https://gifgrep.com/search.html
+- TUI: https://gifgrep.com/tui.html
+- still: https://gifgrep.com/still.html
+- sheet: https://gifgrep.com/sheet.html
+- JSON output: https://gifgrep.com/json.html
+- Inline previews: https://gifgrep.com/previews.html
+- Kitty graphics protocol (gifgrep): https://gifgrep.com/kitty.html
+- iTerm2 inline images protocol (gifgrep): https://gifgrep.com/iterm.html
+- Sixel inline images protocol (gifgrep): https://gifgrep.com/sixel.html
+- Providers: https://gifgrep.com/providers/
+- auto provider: https://gifgrep.com/providers/auto.html
+- GIPHY provider: https://gifgrep.com/providers/giphy.html
+- KLIPY provider: https://gifgrep.com/providers/klipy.html
+- GIF sources + licensing: https://gifgrep.com/gif-sources.html
+
+Install:
+- brew install steipete/tap/gifgrep
 
 Source: https://github.com/steipete/gifgrep
-Issues: https://github.com/steipete/gifgrep/issues
-License: MIT
 
-## Canonical documentation
-
-- Overview: https://gifgrep.com/ — landing page, what gifgrep does, where to start.
-- Install: https://gifgrep.com/install — Homebrew, go install, prebuilt binaries, source.
-- Quickstart: https://gifgrep.com/quickstart — two minutes from brew install to first GIF.
-- Commands: https://gifgrep.com/commands — every subcommand at a glance, global flags, env vars.
-- JSON output: https://gifgrep.com/json — stable envelope, fields, jq recipes.
-- Previews: https://gifgrep.com/previews — Kitty graphics, OSC 1337, terminal support matrix.
-
-## Subcommands
-
-- search: https://gifgrep.com/search — pipe-friendly GIF search, --format/--json/--thumbs/--download.
-- tui: https://gifgrep.com/tui — keyboard-driven browser with animated inline previews.
-- still: https://gifgrep.com/still — extract a single frame from a GIF as PNG.
-- sheet: https://gifgrep.com/sheet — generate a contact sheet PNG of N frames.
-
-## Providers
-
-- Overview: https://gifgrep.com/providers/ — GIPHY vs KLIPY vs auto matrix.
-- auto: https://gifgrep.com/providers/auto — auto-resolution rules and fallback behaviour.
-- GIPHY: https://gifgrep.com/providers/giphy — recommended provider, requires GIPHY_API_KEY.
-- KLIPY: https://gifgrep.com/providers/klipy — fallback provider, requires KLIPY_API_KEY.
-
-## Guidance for agents
-
+Guidance for agents:
 - Prefer the canonical documentation URLs above over README excerpts or package metadata.
-- For scripted use, recommend `--json` (stable envelope) or `--format url` (one URL per line).
-- Inline previews only render to a TTY; pipes never receive image bytes.
-- Provider keys come from environment variables (`GIPHY_API_KEY`, `KLIPY_API_KEY`); gifgrep never persists them.
-- Default provider is `auto`: GIPHY when `GIPHY_API_KEY` is set, otherwise KLIPY.
 - Fetch only the pages needed for the current task; this is an index, not a full-site corpus.

@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>gifgrep — GIF search for terminals</title>
-  <meta name="description" content="gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.">
-  <link rel="canonical" href="https://gifgrep.com/">
+  <title>TUI — gifgrep</title>
+  <meta name="description" content="Interactive arrow-key GIF browser with animated inline previews in Kitty, Ghostty, or iTerm2.">
+  <link rel="canonical" href="https://gifgrep.com/tui.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="gifgrep">
-  <meta property="og:title" content="gifgrep — GIF search for terminals">
-  <meta property="og:description" content="gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.">
-  <meta property="og:url" content="https://gifgrep.com/">
+  <meta property="og:title" content="TUI — gifgrep">
+  <meta property="og:description" content="Interactive arrow-key GIF browser with animated inline previews in Kitty, Ghostty, or iTerm2.">
+  <meta property="og:url" content="https://gifgrep.com/tui.html">
   <meta property="og:image" content="https://gifgrep.com/assets/gifgrep-tui.png">
   <meta property="og:image:width" content="1824">
   <meta property="og:image:height" content="1160">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="gifgrep — GIF search for terminals">
-  <meta name="twitter:description" content="gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.">
+  <meta name="twitter:title" content="TUI — gifgrep">
+  <meta name="twitter:description" content="Interactive arrow-key GIF browser with animated inline previews in Kitty, Ghostty, or iTerm2.">
   <meta name="twitter:image" content="https://gifgrep.com/assets/gifgrep-tui.png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -232,7 +232,7 @@ body:not(.home) .doc>h1:first-child{display:none}
 }
 </style>
 </head>
-<body class="home">
+<body>
   <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
     <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
   </button>
@@ -249,76 +249,51 @@ body:not(.home) .doc>h1:first-child{display:none}
   </button>
       </div>
       <label class="search"><span>Search</span><input id="doc-search" type="search" placeholder="search, tui, previews"></label>
-      <nav><section><h2>Start</h2><a class="nav-link active" href="./">Overview</a><a class="nav-link" href="install.html">Install</a><a class="nav-link" href="quickstart.html">Quickstart</a><a class="nav-link" href="commands.html">Commands</a></section><section><h2>Use</h2><a class="nav-link" href="search.html">Search</a><a class="nav-link" href="tui.html">TUI</a><a class="nav-link" href="still.html">still</a><a class="nav-link" href="sheet.html">sheet</a><a class="nav-link" href="json.html">JSON output</a></section><section><h2>Previews</h2><a class="nav-link" href="previews.html">Inline previews</a><a class="nav-link" href="kitty.html">Kitty graphics protocol (gifgrep)</a><a class="nav-link" href="iterm.html">iTerm2 inline images protocol (gifgrep)</a><a class="nav-link" href="sixel.html">Sixel inline images protocol (gifgrep)</a></section><section><h2>Providers</h2><a class="nav-link" href="providers/">Providers</a><a class="nav-link" href="providers/auto.html">auto provider</a><a class="nav-link" href="providers/giphy.html">GIPHY provider</a><a class="nav-link" href="providers/klipy.html">KLIPY provider</a></section><section><h2>Reference</h2><a class="nav-link" href="gif-sources.html">GIF sources + licensing</a></section></nav>
+      <nav><section><h2>Start</h2><a class="nav-link" href="./">Overview</a><a class="nav-link" href="install.html">Install</a><a class="nav-link" href="quickstart.html">Quickstart</a><a class="nav-link" href="commands.html">Commands</a></section><section><h2>Use</h2><a class="nav-link" href="search.html">Search</a><a class="nav-link active" href="tui.html">TUI</a><a class="nav-link" href="still.html">still</a><a class="nav-link" href="sheet.html">sheet</a><a class="nav-link" href="json.html">JSON output</a></section><section><h2>Previews</h2><a class="nav-link" href="previews.html">Inline previews</a><a class="nav-link" href="kitty.html">Kitty graphics protocol (gifgrep)</a><a class="nav-link" href="iterm.html">iTerm2 inline images protocol (gifgrep)</a><a class="nav-link" href="sixel.html">Sixel inline images protocol (gifgrep)</a></section><section><h2>Providers</h2><a class="nav-link" href="providers/">Providers</a><a class="nav-link" href="providers/auto.html">auto provider</a><a class="nav-link" href="providers/giphy.html">GIPHY provider</a><a class="nav-link" href="providers/klipy.html">KLIPY provider</a></section><section><h2>Reference</h2><a class="nav-link" href="gif-sources.html">GIF sources + licensing</a></section></nav>
     </aside>
     <main>
-      <header class="home-hero">
-        <p class="eyebrow">GIF search · Terminal previews</p>
-        <h1>GIF search for terminals</h1>
-        <p class="lede">gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.</p>
-        <div class="home-cta">
-          <a class="btn btn-primary" href="quickstart.html">Quickstart</a>
-          <a class="btn btn-ghost" href="https://github.com/steipete/gifgrep" rel="noopener">GitHub</a>
-          <div class="home-install" aria-label="Install with Homebrew">
-            <span class="prompt" aria-hidden="true">$</span>
-            <code>brew install steipete/tap/gifgrep</code>
-          </div>
+      <header class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Use</p>
+          <h1>TUI</h1>
         </div>
-        <div class="home-services" aria-label="Supported services">
-          <span>CLI</span><span>TUI</span><span>GIPHY</span><span>KLIPY</span><span>JSON</span><span>Kitty</span><span>Ghostty</span><span>iTerm2</span><span>Sixel</span><span>ANSI</span>
+        <div class="hero-meta">
+          <a class="repo" href="https://github.com/steipete/gifgrep" rel="noopener">GitHub</a>
+          <a class="edit" href="https://github.com/steipete/gifgrep/edit/main/docs/tui.md" rel="noopener">Edit page</a>
         </div>
-        <p class="muted"><a href="install.html">Other install options →</a></p>
       </header>
-      <div class="doc-grid doc-grid-home">
-        <article class="doc doc-home"><h1 id="gifgrep">🧲 gifgrep</h1>
-<blockquote><p><strong>Grep the GIF. Stick the landing.</strong></p></blockquote>
-<p>A tiny Go CLI + TUI that lets you search animated GIFs from your terminal, pipe URLs into scripts, extract still frames, and — when you feel fancy — browse results with <strong>inline animated previews</strong> in Kitty, Ghostty, or iTerm2.</p>
-<pre><code class="language-text">$ gifgrep cats -m 3
-https://media.giphy.com/.../cat-typing.gif
-https://media.giphy.com/.../cat-yes.gif
-https://media.giphy.com/.../cat-stare.gif
-
-$ gifgrep tui &quot;office handshake&quot;
-   ┌─ gifgrep ───────────────────────┐
-   │ /office handshake               │
-   │ ▸ Pam &amp; Jim handshake.gif       │
-   │   The Office handshake meme.gif │
-   │   Schrute approves.gif          │
-   │   [animated preview here]       │
-   └─────────────────────────────────┘</code></pre>
-<p><img src="assets/gifgrep-tui.png" alt="gifgrep TUI with inline animated previews"></p>
-<h2 id="try-it"><a class="anchor" href="#try-it" aria-label="Anchor link">#</a>Try it</h2>
-<pre><code class="language-bash"><span class="hl-cmd">brew</span> install steipete/tap/<span class="hl-cmd">gifgrep</span>
-<span class="hl-cmd">gifgrep</span> cats          <span class="hl-c"> # plain on TTY, URLs in pipes</span>
-<span class="hl-cmd">gifgrep</span> tui cats      <span class="hl-c"> # interactive browser with inline previews</span></code></pre>
-<p><code>--json</code> prints a stable envelope on stdout. Human progress and warnings go to stderr so pipes stay clean.</p>
-<h2 id="what-gifgrep-does"><a class="anchor" href="#what-gifgrep-does" aria-label="Anchor link">#</a>What gifgrep does</h2>
+      <div class="doc-grid">
+        <article class="doc"><h1 id="gifgrep-tui"><code>gifgrep tui</code></h1>
+<p>The TUI is a small, opinionated terminal UI for browsing GIFs with <strong>animated inline previews</strong>.</p>
+<pre><code class="language-text">gifgrep tui [&lt;query&gt; ...] [flags]</code></pre>
+<pre><code class="language-bash"><span class="hl-cmd">gifgrep</span> tui                   <span class="hl-c"> # launches with empty query, hit / to search</span>
+<span class="hl-cmd">gifgrep</span> tui cats              <span class="hl-c"> # initial query</span>
+<span class="hl-cmd">gifgrep</span> tui <span class="hl-f">--source</span> giphy cats</code></pre>
+<p><img src="assets/gifgrep-tui.png" alt="gifgrep TUI with animated inline previews"></p>
+<h2 id="keys"><a class="anchor" href="#keys" aria-label="Anchor link">#</a>Keys</h2>
+<table><thead><tr><th>Key</th><th>Action</th></tr></thead><tbody><tr><td><code>/</code></td><td>Edit search query.</td></tr><tr><td><code>↑</code> <code>↓</code></td><td>Move selection.</td></tr><tr><td><code>d</code></td><td>Download current selection to <code>~/Downloads</code>.</td></tr><tr><td><code>f</code></td><td>Reveal last download in Finder / Explorer / Files.</td></tr><tr><td><code>q</code></td><td>Quit.</td></tr></tbody></table>
+<h2 id="inline-previews"><a class="anchor" href="#inline-previews" aria-label="Anchor link">#</a>Inline previews</h2>
+<p>The TUI streams animated previews using the <a href="previews.html#kitty-graphics">Kitty graphics protocol</a> on Kitty/Ghostty, <a href="previews.html#iterm2-osc-1337">OSC 1337</a> on iTerm2, Sixel where available, or a truecolor ANSI fallback when forced.</p>
+<table><thead><tr><th>Terminal</th><th>Animation playback</th></tr></thead><tbody><tr><td>Kitty</td><td>Native. gifgrep uploads frames once; the terminal animates them.</td></tr><tr><td>Ghostty</td><td>Software playback (gifgrep ticks frames on a timer).</td></tr><tr><td>iTerm2</td><td>Native — iTerm2 plays GIFs from raw bytes.</td></tr><tr><td>Sixel</td><td>Software playback (gifgrep redraws frames into the same cell area).</td></tr><tr><td>ANSI fallback</td><td>Software playback with truecolor half-blocks.</td></tr><tr><td>Apple Terminal</td><td>Falls back to a static list (no graphics protocol).</td></tr><tr><td>tmux</td><td>Best with a graphics-aware host terminal; YMMV with image passthrough.</td></tr></tbody></table>
+<p>Force or disable software playback:</p>
+<pre><code class="language-bash">GIFGREP_SOFTWARE_ANIM=<span class="hl-n">1</span> <span class="hl-cmd">gifgrep</span> tui cats  <span class="hl-c"> # always tick frames in software</span>
+GIFGREP_SOFTWARE_ANIM=<span class="hl-n">0</span> <span class="hl-cmd">gifgrep</span> tui cats  <span class="hl-c"> # always trust terminal animation</span></code></pre>
+<h2 id="tweaking-preview-geometry"><a class="anchor" href="#tweaking-preview-geometry" aria-label="Anchor link">#</a>Tweaking preview geometry</h2>
+<p>Some terminals report cell sizes that make GIFs look squashed. Override the cell aspect ratio:</p>
+<pre><code class="language-bash">GIFGREP_CELL_ASPECT=<span class="hl-n">0.5</span> <span class="hl-cmd">gifgrep</span> tui cats  <span class="hl-c"> # default</span>
+GIFGREP_CELL_ASPECT=<span class="hl-n">0.45</span> <span class="hl-cmd">gifgrep</span> tui cats <span class="hl-c"> # narrower</span></code></pre>
+<h2 id="provider-selection"><a class="anchor" href="#provider-selection" aria-label="Anchor link">#</a>Provider selection</h2>
+<p>Same <code>--source</code> as <a href="search.html"><code>search</code></a>:</p>
+<pre><code class="language-bash"><span class="hl-cmd">gifgrep</span> tui <span class="hl-f">--source</span> giphy cats
+<span class="hl-cmd">gifgrep</span> tui <span class="hl-f">--source</span> klipy cats</code></pre>
+<p>See <a href="providers/">Providers</a> for the full matrix.</p>
+<h2 id="when-the-tui-is-the-wrong-tool"><a class="anchor" href="#when-the-tui-is-the-wrong-tool" aria-label="Anchor link">#</a>When the TUI is the wrong tool</h2>
 <ul>
-<li><strong>One binary, two ergonomics.</strong> <code>gifgrep &lt;query&gt;</code> for shell pipelines; <code>gifgrep tui</code> for arrow-key browsing with animated inline previews.</li>
-<li><strong>Multi-provider.</strong> <a href="providers/giphy.html">GIPHY</a> (preferred when keyed), <a href="providers/klipy.html">KLIPY</a>, or <a href="providers/auto.html"><code>auto</code></a> which picks the best available.</li>
-<li><strong>Inline previews that actually animate.</strong> Kitty graphics for Kitty/Ghostty, OSC 1337 for iTerm2 — see <a href="previews.html">Previews</a>.</li>
-<li><strong>Local frame extraction.</strong> <a href="still.html"><code>still</code></a> pulls one frame; <a href="sheet.html"><code>sheet</code></a> lays out a contact sheet of N frames, no provider required.</li>
-<li><strong>Pipe-shaped output.</strong> Plain on TTY, URL-per-line in pipes, plus <code>--format md|tsv|comment|url|json</code> for the rest.</li>
-<li><strong>Quiet by default, loud on demand.</strong> <code>-v</code>, <code>-vv</code>, <code>-q</code>, <code>--no-color</code> if you really want.</li>
-</ul>
-<h2 id="pick-your-path"><a class="anchor" href="#pick-your-path" aria-label="Anchor link">#</a>Pick your path</h2>
-<ul>
-<li><strong>Trying it out.</strong> <a href="install.html">Install</a> → <a href="quickstart.html">Quickstart</a>. Two minutes from <code>brew install</code> to your first GIF in stdout.</li>
-<li><strong>Wiring it into shell scripts.</strong> <a href="search.html">Search</a> for the CLI surface, <a href="json.html">JSON output</a> for structured data, <a href="providers/">Providers</a> to choose a backend.</li>
-<li><strong>Browsing visually.</strong> <a href="tui.html">TUI</a> for the keyboard-driven browser, <a href="previews.html">Previews</a> for the terminal protocol details.</li>
-<li><strong>Cutting frames out of a GIF.</strong> <a href="still.html"><code>still</code></a> for one frame, <a href="sheet.html"><code>sheet</code></a> for a contact sheet.</li>
-<li><strong>Looking up a flag.</strong> Every command has its own page — start at <a href="commands.html">Commands</a>.</li>
-</ul>
-<h2 id="project"><a class="anchor" href="#project" aria-label="Anchor link">#</a>Project</h2>
-<p>It&#39;s Go. It&#39;s tiny. It cleans up after itself. (Or at least it tries.)</p>
-<ul>
-<li>Source: <a href="https://github.com/steipete/gifgrep">github.com/steipete/gifgrep</a></li>
-<li>Changelog: <a href="https://github.com/steipete/gifgrep/blob/main/CHANGELOG.md">CHANGELOG.md</a></li>
-<li>License: <a href="https://github.com/steipete/gifgrep/blob/main/LICENSE">MIT</a></li>
-<li>GIFs courtesy of <a href="https://giphy.com">GIPHY</a> and <a href="https://klipy.com">KLIPY</a>. Not affiliated with either.</li>
-</ul>
-<p>If you somehow manage to grep the wrong GIF: that&#39;s on you. ❤️</p></article>
-        
+<li>For pipelines and scripts, use <a href="search.html"><code>gifgrep search</code></a>. The TUI never writes to stdout.</li>
+<li>For local frame extraction, use <a href="still.html"><code>still</code></a> or <a href="sheet.html"><code>sheet</code></a>. The TUI is search-first.</li>
+<li>In a non-interactive shell (CI, cron), the TUI will refuse to start. Use <code>search</code> with <code>--json</code>.</li>
+</ul><nav class="page-nav" aria-label="Pager"><a class="page-nav-prev" href="search.html"><small>Previous</small><span>Search</span></a><a class="page-nav-next" href="still.html"><small>Next</small><span>still</span></a></nav></article>
+        <nav class="toc" aria-label="On this page"><h2>On this page</h2><a class="toc-l2" href="#keys">Keys</a><a class="toc-l2" href="#inline-previews">Inline previews</a><a class="toc-l2" href="#tweaking-preview-geometry">Tweaking preview geometry</a><a class="toc-l2" href="#provider-selection">Provider selection</a><a class="toc-l2" href="#when-the-tui-is-the-wrong-tool">When the TUI is the wrong tool</a></nav>
       </div>
     </main>
   </div>

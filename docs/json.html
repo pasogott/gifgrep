@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>gifgrep — GIF search for terminals</title>
-  <meta name="description" content="gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.">
-  <link rel="canonical" href="https://gifgrep.com/">
+  <title>JSON output — gifgrep</title>
+  <meta name="description" content="Stable JSON envelope for gifgrep — designed for scripts, jq pipelines, and coding agents.">
+  <link rel="canonical" href="https://gifgrep.com/json.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="gifgrep">
-  <meta property="og:title" content="gifgrep — GIF search for terminals">
-  <meta property="og:description" content="gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.">
-  <meta property="og:url" content="https://gifgrep.com/">
+  <meta property="og:title" content="JSON output — gifgrep">
+  <meta property="og:description" content="Stable JSON envelope for gifgrep — designed for scripts, jq pipelines, and coding agents.">
+  <meta property="og:url" content="https://gifgrep.com/json.html">
   <meta property="og:image" content="https://gifgrep.com/assets/gifgrep-tui.png">
   <meta property="og:image:width" content="1824">
   <meta property="og:image:height" content="1160">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="gifgrep — GIF search for terminals">
-  <meta name="twitter:description" content="gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.">
+  <meta name="twitter:title" content="JSON output — gifgrep">
+  <meta name="twitter:description" content="Stable JSON envelope for gifgrep — designed for scripts, jq pipelines, and coding agents.">
   <meta name="twitter:image" content="https://gifgrep.com/assets/gifgrep-tui.png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -232,7 +232,7 @@ body:not(.home) .doc>h1:first-child{display:none}
 }
 </style>
 </head>
-<body class="home">
+<body>
   <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
     <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
   </button>
@@ -249,76 +249,82 @@ body:not(.home) .doc>h1:first-child{display:none}
   </button>
       </div>
       <label class="search"><span>Search</span><input id="doc-search" type="search" placeholder="search, tui, previews"></label>
-      <nav><section><h2>Start</h2><a class="nav-link active" href="./">Overview</a><a class="nav-link" href="install.html">Install</a><a class="nav-link" href="quickstart.html">Quickstart</a><a class="nav-link" href="commands.html">Commands</a></section><section><h2>Use</h2><a class="nav-link" href="search.html">Search</a><a class="nav-link" href="tui.html">TUI</a><a class="nav-link" href="still.html">still</a><a class="nav-link" href="sheet.html">sheet</a><a class="nav-link" href="json.html">JSON output</a></section><section><h2>Previews</h2><a class="nav-link" href="previews.html">Inline previews</a><a class="nav-link" href="kitty.html">Kitty graphics protocol (gifgrep)</a><a class="nav-link" href="iterm.html">iTerm2 inline images protocol (gifgrep)</a><a class="nav-link" href="sixel.html">Sixel inline images protocol (gifgrep)</a></section><section><h2>Providers</h2><a class="nav-link" href="providers/">Providers</a><a class="nav-link" href="providers/auto.html">auto provider</a><a class="nav-link" href="providers/giphy.html">GIPHY provider</a><a class="nav-link" href="providers/klipy.html">KLIPY provider</a></section><section><h2>Reference</h2><a class="nav-link" href="gif-sources.html">GIF sources + licensing</a></section></nav>
+      <nav><section><h2>Start</h2><a class="nav-link" href="./">Overview</a><a class="nav-link" href="install.html">Install</a><a class="nav-link" href="quickstart.html">Quickstart</a><a class="nav-link" href="commands.html">Commands</a></section><section><h2>Use</h2><a class="nav-link" href="search.html">Search</a><a class="nav-link" href="tui.html">TUI</a><a class="nav-link" href="still.html">still</a><a class="nav-link" href="sheet.html">sheet</a><a class="nav-link active" href="json.html">JSON output</a></section><section><h2>Previews</h2><a class="nav-link" href="previews.html">Inline previews</a><a class="nav-link" href="kitty.html">Kitty graphics protocol (gifgrep)</a><a class="nav-link" href="iterm.html">iTerm2 inline images protocol (gifgrep)</a><a class="nav-link" href="sixel.html">Sixel inline images protocol (gifgrep)</a></section><section><h2>Providers</h2><a class="nav-link" href="providers/">Providers</a><a class="nav-link" href="providers/auto.html">auto provider</a><a class="nav-link" href="providers/giphy.html">GIPHY provider</a><a class="nav-link" href="providers/klipy.html">KLIPY provider</a></section><section><h2>Reference</h2><a class="nav-link" href="gif-sources.html">GIF sources + licensing</a></section></nav>
     </aside>
     <main>
-      <header class="home-hero">
-        <p class="eyebrow">GIF search · Terminal previews</p>
-        <h1>GIF search for terminals</h1>
-        <p class="lede">gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2.</p>
-        <div class="home-cta">
-          <a class="btn btn-primary" href="quickstart.html">Quickstart</a>
-          <a class="btn btn-ghost" href="https://github.com/steipete/gifgrep" rel="noopener">GitHub</a>
-          <div class="home-install" aria-label="Install with Homebrew">
-            <span class="prompt" aria-hidden="true">$</span>
-            <code>brew install steipete/tap/gifgrep</code>
-          </div>
+      <header class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Use</p>
+          <h1>JSON output</h1>
         </div>
-        <div class="home-services" aria-label="Supported services">
-          <span>CLI</span><span>TUI</span><span>GIPHY</span><span>KLIPY</span><span>JSON</span><span>Kitty</span><span>Ghostty</span><span>iTerm2</span><span>Sixel</span><span>ANSI</span>
+        <div class="hero-meta">
+          <a class="repo" href="https://github.com/steipete/gifgrep" rel="noopener">GitHub</a>
+          <a class="edit" href="https://github.com/steipete/gifgrep/edit/main/docs/json.md" rel="noopener">Edit page</a>
         </div>
-        <p class="muted"><a href="install.html">Other install options →</a></p>
       </header>
-      <div class="doc-grid doc-grid-home">
-        <article class="doc doc-home"><h1 id="gifgrep">🧲 gifgrep</h1>
-<blockquote><p><strong>Grep the GIF. Stick the landing.</strong></p></blockquote>
-<p>A tiny Go CLI + TUI that lets you search animated GIFs from your terminal, pipe URLs into scripts, extract still frames, and — when you feel fancy — browse results with <strong>inline animated previews</strong> in Kitty, Ghostty, or iTerm2.</p>
-<pre><code class="language-text">$ gifgrep cats -m 3
-https://media.giphy.com/.../cat-typing.gif
-https://media.giphy.com/.../cat-yes.gif
-https://media.giphy.com/.../cat-stare.gif
+      <div class="doc-grid">
+        <article class="doc"><h1 id="json-output">JSON output</h1>
+<p><code>gifgrep</code> is built for pipes, and <code>--json</code> is the contract.</p>
+<h2 id="shape"><a class="anchor" href="#shape" aria-label="Anchor link">#</a>Shape</h2>
+<pre><code class="language-bash"><span class="hl-cmd">gifgrep</span> cats <span class="hl-f">--json</span> <span class="hl-f">--max</span> <span class="hl-n">2</span></code></pre>
+<pre><code class="language-json">[
+  {
+    <span class="hl-k">&quot;id&quot;:</span> <span class="hl-s">&quot;abc123&quot;</span>,
+    <span class="hl-k">&quot;title&quot;:</span> <span class="hl-s">&quot;Cat typing furiously&quot;</span>,
+    <span class="hl-k">&quot;url&quot;:</span> <span class="hl-s">&quot;https://media.giphy.com/.../cat-typing.gif&quot;</span>,
+    <span class="hl-k">&quot;preview_url&quot;:</span> <span class="hl-s">&quot;https://media.giphy.com/.../cat-typing-tiny.gif&quot;</span>,
+    <span class="hl-k">&quot;tags&quot;:</span> [<span class="hl-s">&quot;cat&quot;</span>, <span class="hl-s">&quot;typing&quot;</span>, <span class="hl-s">&quot;computer&quot;</span>],
+    <span class="hl-k">&quot;width&quot;:</span> <span class="hl-n">480</span>,
+    <span class="hl-k">&quot;height&quot;:</span> <span class="hl-n">360</span>
+  },
+  {
+    <span class="hl-k">&quot;id&quot;:</span> <span class="hl-s">&quot;def456&quot;</span>,
+    <span class="hl-k">&quot;title&quot;:</span> <span class="hl-s">&quot;Cat says yes&quot;</span>,
+    <span class="hl-k">&quot;url&quot;:</span> <span class="hl-s">&quot;https://media.giphy.com/.../cat-yes.gif&quot;</span>,
+    <span class="hl-k">&quot;preview_url&quot;:</span> <span class="hl-s">&quot;https://media.giphy.com/.../cat-yes-tiny.gif&quot;</span>,
+    <span class="hl-k">&quot;tags&quot;:</span> [<span class="hl-s">&quot;cat&quot;</span>, <span class="hl-s">&quot;yes&quot;</span>, <span class="hl-s">&quot;approve&quot;</span>],
+    <span class="hl-k">&quot;width&quot;:</span> <span class="hl-n">320</span>,
+    <span class="hl-k">&quot;height&quot;:</span> <span class="hl-n">240</span>
+  }
+]</code></pre>
+<h2 id="fields"><a class="anchor" href="#fields" aria-label="Anchor link">#</a>Fields</h2>
+<table><thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead><tbody><tr><td><code>id</code></td><td>string</td><td>Provider&#39;s stable identifier.</td></tr><tr><td><code>title</code></td><td>string</td><td>Human title; falls back to provider description, then <code>id</code>.</td></tr><tr><td><code>url</code></td><td>string</td><td>Direct GIF URL — what <code>--format url</code> prints.</td></tr><tr><td><code>preview_url</code></td><td>string</td><td>Smaller GIF good for thumbnails / inline previews.</td></tr><tr><td><code>tags</code></td><td>string[]</td><td>May be empty depending on provider.</td></tr><tr><td><code>width</code></td><td>number</td><td>Original GIF width in pixels (0 if unknown).</td></tr><tr><td><code>height</code></td><td>number</td><td>Original GIF height in pixels (0 if unknown).</td></tr></tbody></table>
+<p>The shape is identical across providers. Field values may differ — KLIPY tends to ship tags more aggressively than GIPHY, and dimensions can be <code>0</code> when the upstream omits them.</p>
+<h2 id="stability"><a class="anchor" href="#stability" aria-label="Anchor link">#</a>Stability</h2>
+<ul>
+<li>New optional fields may be added without warning.</li>
+<li>Existing fields will not be renamed or removed without a major version bump.</li>
+<li>Stdout is JSON; stderr remains human (progress, warnings, errors).</li>
+<li>A non-zero exit code means the array is <strong>not</strong> valid — check stderr.</li>
+</ul>
+<h2 id="recipes"><a class="anchor" href="#recipes" aria-label="Anchor link">#</a>Recipes</h2>
+<pre><code class="language-bash"><span class="hl-c"># Top URL only</span>
+<span class="hl-cmd">gifgrep</span> cats <span class="hl-f">--json</span> <span class="hl-f">--max</span> <span class="hl-n">1</span> | <span class="hl-cmd">jq</span> <span class="hl-f">-r</span> <span class="hl-s">&#39;.[0].url&#39;</span>
 
-$ gifgrep tui &quot;office handshake&quot;
-   ┌─ gifgrep ───────────────────────┐
-   │ /office handshake               │
-   │ ▸ Pam &amp; Jim handshake.gif       │
-   │   The Office handshake meme.gif │
-   │   Schrute approves.gif          │
-   │   [animated preview here]       │
-   └─────────────────────────────────┘</code></pre>
-<p><img src="assets/gifgrep-tui.png" alt="gifgrep TUI with inline animated previews"></p>
-<h2 id="try-it"><a class="anchor" href="#try-it" aria-label="Anchor link">#</a>Try it</h2>
-<pre><code class="language-bash"><span class="hl-cmd">brew</span> install steipete/tap/<span class="hl-cmd">gifgrep</span>
-<span class="hl-cmd">gifgrep</span> cats          <span class="hl-c"> # plain on TTY, URLs in pipes</span>
-<span class="hl-cmd">gifgrep</span> tui cats      <span class="hl-c"> # interactive browser with inline previews</span></code></pre>
-<p><code>--json</code> prints a stable envelope on stdout. Human progress and warnings go to stderr so pipes stay clean.</p>
-<h2 id="what-gifgrep-does"><a class="anchor" href="#what-gifgrep-does" aria-label="Anchor link">#</a>What gifgrep does</h2>
+<span class="hl-c"># All preview URLs (for thumbnails in another tool)</span>
+<span class="hl-cmd">gifgrep</span> cats <span class="hl-f">--json</span> <span class="hl-f">--max</span> <span class="hl-n">20</span> | <span class="hl-cmd">jq</span> <span class="hl-f">-r</span> <span class="hl-s">&#39;.[].preview_url&#39;</span>
+
+<span class="hl-c"># Filter to wide GIFs</span>
+<span class="hl-cmd">gifgrep</span> <span class="hl-s">&quot;office handshake&quot;</span> <span class="hl-f">--json</span> <span class="hl-f">--max</span> <span class="hl-n">50</span> \
+  | <span class="hl-cmd">jq</span> <span class="hl-s">&#39;[.[] | select(.width &gt;= 480)]&#39;</span>
+
+<span class="hl-c"># Convert to TSV</span>
+<span class="hl-cmd">gifgrep</span> cats <span class="hl-f">--json</span> <span class="hl-f">--max</span> <span class="hl-n">10</span> \
+  | <span class="hl-cmd">jq</span> <span class="hl-f">-r</span> <span class="hl-s">&#39;.[] | [.id, .title, .url] | @tsv&#39;</span>
+
+<span class="hl-c"># Pipe into an LLM (URLs only)</span>
+<span class="hl-cmd">gifgrep</span> <span class="hl-s">&quot;ship it&quot;</span> <span class="hl-f">--json</span> <span class="hl-f">--max</span> <span class="hl-n">10</span> \
+  | <span class="hl-cmd">jq</span> <span class="hl-f">-r</span> <span class="hl-s">&#39;.[].url&#39;</span> \
+  | llm <span class="hl-s">&quot;Pick the most enthusiastic one&quot;</span></code></pre>
+<h2 id="when-to-use-json-vs-format"><a class="anchor" href="#when-to-use-json-vs-format" aria-label="Anchor link">#</a>When to use JSON vs <code>--format</code></h2>
 <ul>
-<li><strong>One binary, two ergonomics.</strong> <code>gifgrep &lt;query&gt;</code> for shell pipelines; <code>gifgrep tui</code> for arrow-key browsing with animated inline previews.</li>
-<li><strong>Multi-provider.</strong> <a href="providers/giphy.html">GIPHY</a> (preferred when keyed), <a href="providers/klipy.html">KLIPY</a>, or <a href="providers/auto.html"><code>auto</code></a> which picks the best available.</li>
-<li><strong>Inline previews that actually animate.</strong> Kitty graphics for Kitty/Ghostty, OSC 1337 for iTerm2 — see <a href="previews.html">Previews</a>.</li>
-<li><strong>Local frame extraction.</strong> <a href="still.html"><code>still</code></a> pulls one frame; <a href="sheet.html"><code>sheet</code></a> lays out a contact sheet of N frames, no provider required.</li>
-<li><strong>Pipe-shaped output.</strong> Plain on TTY, URL-per-line in pipes, plus <code>--format md|tsv|comment|url|json</code> for the rest.</li>
-<li><strong>Quiet by default, loud on demand.</strong> <code>-v</code>, <code>-vv</code>, <code>-q</code>, <code>--no-color</code> if you really want.</li>
+<li><strong><code>--json</code></strong> — when something downstream parses structured data (<code>jq</code>, <code>python</code>, an LLM, a script).</li>
+<li><strong><code>--format url</code></strong> — when the consumer is <code>xargs</code>, <code>wget</code>, <code>pbcopy</code>, etc.</li>
+<li><strong><code>--format md</code></strong> — when you&#39;re pasting into a markdown doc.</li>
+<li><strong><code>--format tsv</code></strong> — when you want columns without leaving the shell.</li>
 </ul>
-<h2 id="pick-your-path"><a class="anchor" href="#pick-your-path" aria-label="Anchor link">#</a>Pick your path</h2>
-<ul>
-<li><strong>Trying it out.</strong> <a href="install.html">Install</a> → <a href="quickstart.html">Quickstart</a>. Two minutes from <code>brew install</code> to your first GIF in stdout.</li>
-<li><strong>Wiring it into shell scripts.</strong> <a href="search.html">Search</a> for the CLI surface, <a href="json.html">JSON output</a> for structured data, <a href="providers/">Providers</a> to choose a backend.</li>
-<li><strong>Browsing visually.</strong> <a href="tui.html">TUI</a> for the keyboard-driven browser, <a href="previews.html">Previews</a> for the terminal protocol details.</li>
-<li><strong>Cutting frames out of a GIF.</strong> <a href="still.html"><code>still</code></a> for one frame, <a href="sheet.html"><code>sheet</code></a> for a contact sheet.</li>
-<li><strong>Looking up a flag.</strong> Every command has its own page — start at <a href="commands.html">Commands</a>.</li>
-</ul>
-<h2 id="project"><a class="anchor" href="#project" aria-label="Anchor link">#</a>Project</h2>
-<p>It&#39;s Go. It&#39;s tiny. It cleans up after itself. (Or at least it tries.)</p>
-<ul>
-<li>Source: <a href="https://github.com/steipete/gifgrep">github.com/steipete/gifgrep</a></li>
-<li>Changelog: <a href="https://github.com/steipete/gifgrep/blob/main/CHANGELOG.md">CHANGELOG.md</a></li>
-<li>License: <a href="https://github.com/steipete/gifgrep/blob/main/LICENSE">MIT</a></li>
-<li>GIFs courtesy of <a href="https://giphy.com">GIPHY</a> and <a href="https://klipy.com">KLIPY</a>. Not affiliated with either.</li>
-</ul>
-<p>If you somehow manage to grep the wrong GIF: that&#39;s on you. ❤️</p></article>
-        
+<p>See <a href="search.html">Search</a> for the full format matrix.</p><nav class="page-nav" aria-label="Pager"><a class="page-nav-prev" href="sheet.html"><small>Previous</small><span>sheet</span></a><a class="page-nav-next" href="previews.html"><small>Next</small><span>Inline previews</span></a></nav></article>
+        <nav class="toc" aria-label="On this page"><h2>On this page</h2><a class="toc-l2" href="#shape">Shape</a><a class="toc-l2" href="#fields">Fields</a><a class="toc-l2" href="#stability">Stability</a><a class="toc-l2" href="#recipes">Recipes</a><a class="toc-l2" href="#when-to-use-json-vs-format">When to use JSON vs --format</a></nav>
       </div>
     </main>
   </div>

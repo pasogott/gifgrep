@@ -4,7 +4,7 @@
 
 ### Docs
 
-- Restore the GitHub Pages landing page at `gifgrep.com`.
+- Replace the GitHub Pages landing page with a generated docs site.
 
 ## 0.3.0 - 2026-05-10
 
