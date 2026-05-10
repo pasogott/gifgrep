@@ -273,6 +273,7 @@ body:not(.home) .doc>h1:first-child{display:none}
         <article class="doc doc-home"><h1 id="gifgrep">🧲 gifgrep</h1>
 <blockquote><p><strong>Grep the GIF. Stick the landing.</strong></p></blockquote>
 <p>A tiny Go CLI + TUI that lets you search animated GIFs from your terminal, pipe URLs into scripts, extract still frames, and — when you feel fancy — browse results with <strong>inline animated previews</strong> in Kitty, Ghostty, or iTerm2.</p>
+<p><video src="assets/gifgrep-tui.mp4" poster="assets/gifgrep-tui.png" aria-label="gifgrep TUI with inline animated previews" autoplay muted loop playsinline></video></p>
 <pre><code class="language-text">$ gifgrep cats -m 3
 https://media.giphy.com/.../cat-typing.gif
 https://media.giphy.com/.../cat-yes.gif
@@ -286,7 +287,6 @@ $ gifgrep tui &quot;office handshake&quot;
    │   Schrute approves.gif          │
    │   [animated preview here]       │
    └─────────────────────────────────┘</code></pre>
-<p><video src="assets/gifgrep-tui.mp4" poster="assets/gifgrep-tui.png" aria-label="gifgrep TUI with inline animated previews" autoplay muted loop playsinline></video></p>
 <h2 id="try-it"><a class="anchor" href="#try-it" aria-label="Anchor link">#</a>Try it</h2>
 <pre><code class="language-bash"><span class="hl-cmd">brew</span> install steipete/tap/<span class="hl-cmd">gifgrep</span>
 <span class="hl-cmd">gifgrep</span> cats          <span class="hl-c"> # plain on TTY, URLs in pipes</span>

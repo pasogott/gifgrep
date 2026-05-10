@@ -10,6 +10,8 @@ description: "gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPH
 
 A tiny Go CLI + TUI that lets you search animated GIFs from your terminal, pipe URLs into scripts, extract still frames, and — when you feel fancy — browse results with **inline animated previews** in Kitty, Ghostty, or iTerm2.
 
+![gifgrep TUI with inline animated previews](assets/gifgrep-tui.mp4)
+
 ```
 $ gifgrep cats -m 3
 https://media.giphy.com/.../cat-typing.gif
@@ -25,8 +27,6 @@ $ gifgrep tui "office handshake"
    │   [animated preview here]       │
    └─────────────────────────────────┘
 ```
-
-![gifgrep TUI with inline animated previews](assets/gifgrep-tui.mp4)
 
 ## Try it
 
