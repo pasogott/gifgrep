@@ -12,6 +12,7 @@
 ### Fixes
 
 - Search: let `auto` fall back to KLIPY when a configured Giphy key fails.
+- TUI: improve bottom hint label contrast for Solarized dark and similar themes.
 
 ### Docs
 

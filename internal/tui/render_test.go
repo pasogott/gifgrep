@@ -330,4 +330,7 @@ func TestDrawHintsDoesNotColorWords(t *testing.T) {
 	if !strings.Contains(text, "Download") || !strings.Contains(text, "Edit") {
 		t.Fatalf("expected hint labels")
 	}
+	if strings.Contains(text, "\x1b[90mDownload") || !strings.Contains(text, "\x1b[37mDownload") {
+		t.Fatalf("expected high-contrast hint labels, got %q", text)
+	}
 }

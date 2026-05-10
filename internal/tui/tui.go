@@ -764,7 +764,7 @@ func drawHints(out *bufio.Writer, state *appState, layout layout) {
 		if !state.useColor {
 			return key + " " + label
 		}
-		return styleIf(true, key, "\x1b[1m", "\x1b[36m") + " " + styleIf(true, label, "\x1b[90m")
+		return styleIf(true, key, "\x1b[1m", "\x1b[36m") + " " + styleIf(true, label, "\x1b[37m")
 	}
 	hints := strings.Join([]string{
 		formatHint("⏎", "Search"),
