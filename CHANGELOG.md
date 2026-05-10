@@ -6,6 +6,7 @@
 
 - Replace the GitHub Pages landing page with a generated docs site.
 - Refresh the TUI screenshot with a Ghostty capture from a macOS Crabbox.
+- Add the Ghostty capture video to the homepage.
 
 ## 0.3.0 - 2026-05-10
 

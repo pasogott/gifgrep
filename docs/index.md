@@ -26,7 +26,7 @@ $ gifgrep tui "office handshake"
    └─────────────────────────────────┘
 ```
 
-![gifgrep TUI with inline animated previews](assets/gifgrep-tui.png)
+![gifgrep TUI with inline animated previews](assets/gifgrep-tui.mp4)
 
 ## Try it
 

@@ -368,7 +368,7 @@ function inline(text, currentRel) {
     return `\u0000${stash.length - 1}\u0000`;
   });
   out = escapeHtml(out)
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, href) => `<img src="${escapeAttr(rewriteHref(href, currentRel))}" alt="${alt}">`)
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, href) => mediaHtml(alt, href, currentRel))
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[^*])\*([^*\s][^*]*?)\*(?!\*)/g, "$1<em>$2</em>")
     .replace(/(^|[^_])_([^_\s][^_]*?)_(?!_)/g, "$1<em>$2</em>")
@@ -377,6 +377,15 @@ function inline(text, currentRel) {
   out = out.replace(/\\\|/g, "|");
   out = out.replace(/&lt;br&gt;/g, "<br>");
   return out.replace(/\u0000(\d+)\u0000/g, (_, i) => stash[Number(i)]);
+}
+
+function mediaHtml(alt, href, currentRel) {
+  const src = rewriteHref(href, currentRel);
+  if (href.split(/[?#]/)[0].toLowerCase().endsWith(".mp4")) {
+    const poster = src.replace(/\.mp4$/i, ".png");
+    return `<video src="${escapeAttr(src)}" poster="${escapeAttr(poster)}" aria-label="${escapeAttr(alt)}" autoplay muted loop playsinline></video>`;
+  }
+  return `<img src="${escapeAttr(src)}" alt="${escapeAttr(alt)}">`;
 }
 
 function rewriteHref(href, currentRel) {
@@ -486,7 +495,7 @@ function layout({ page, html, toc, prev, next, sectionName }) {
     ["meta", "property", "og:url", "content", canonicalUrl],
     ["meta", "property", "og:image", "content", socialImage],
     ["meta", "property", "og:image:width", "content", "1824"],
-    ["meta", "property", "og:image:height", "content", "1160"],
+    ["meta", "property", "og:image:height", "content", "1209"],
     ["meta", "name", "twitter:card", "content", "summary_large_image"],
     ["meta", "name", "twitter:title", "content", titleSuffix],
     ["meta", "name", "twitter:description", "content", description],
