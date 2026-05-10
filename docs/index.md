@@ -4,12 +4,6 @@ permalink: /
 description: "gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPHY or KLIPY, pipes URLs/JSON into your scripts, and previews results inline in Kitty, Ghostty, or iTerm2."
 ---
 
-# 🧲 gifgrep
-
-> **Grep the GIF. Stick the landing.**
-
-A tiny Go CLI + TUI that lets you search animated GIFs from your terminal, pipe URLs into scripts, extract still frames, and — when you feel fancy — browse results with **inline animated previews** in Kitty, Ghostty, or iTerm2.
-
 ![gifgrep TUI with inline animated previews](assets/gifgrep-tui.mp4)
 
 ```

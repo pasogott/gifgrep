@@ -8,6 +8,7 @@
 - Refresh the TUI screenshot with a Ghostty capture from a macOS Crabbox.
 - Add the Ghostty capture video to the homepage.
 - Move the homepage demo video above the command sample.
+- Fold the homepage `gifgrep` title into the hero to avoid duplicate intro copy.
 
 ## 0.3.0 - 2026-05-10
 

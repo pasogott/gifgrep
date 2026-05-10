@@ -442,6 +442,10 @@ function homeHero(page) {
     : "quickstart.html";
   const services = ["CLI", "TUI", "GIPHY", "KLIPY", "JSON", "Kitty", "Ghostty", "iTerm2", "Sixel", "ANSI"];
   return `<header class="home-hero">
+        <div class="home-product" aria-label="${escapeAttr(productName)}">
+          <span class="home-product-mark" aria-hidden="true">🧲</span>
+          <span>${escapeHtml(productName)}</span>
+        </div>
         <p class="eyebrow">GIF search · Terminal previews</p>
         <h1>${escapeHtml(productTagline)}</h1>
         <p class="lede">${escapeHtml(description)}</p>
