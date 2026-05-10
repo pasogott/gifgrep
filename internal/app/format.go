@@ -298,6 +298,8 @@ func prepareThumbData(thumbs termcaps.InlineProtocol, data []byte, src string, r
 			return nil, fmt.Errorf("empty image")
 		}
 		return data, nil
+	case termcaps.InlineANSI:
+		return nil, fmt.Errorf("inline thumbnails not supported")
 	default:
 		return nil, fmt.Errorf("inline thumbnails not supported")
 	}
@@ -336,6 +338,8 @@ func sendThumb(out *bufio.Writer, thumbs termcaps.InlineProtocol, id uint32, dat
 		err = sendThumbSixel(out, decoded.Frames[0], cols, rows)
 		restoreCursor(out)
 		return err
+	case termcaps.InlineANSI:
+		return fmt.Errorf("inline thumbnails not supported")
 	default:
 		return fmt.Errorf("inline thumbnails not supported")
 	}

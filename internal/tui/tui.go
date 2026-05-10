@@ -984,15 +984,17 @@ func sendPreviewFrame(state *appState, out *bufio.Writer, frame gifdecode.Frame,
 	}
 	saveCursor(out)
 	moveCursor(out, row, col)
-	if state.inline == termcaps.InlineSixel {
+	switch state.inline {
+	case termcaps.InlineSixel:
 		_ = sendSixelFrameFn(out, frame, cols, rows)
-	} else if state.inline == termcaps.InlineANSI {
+	case termcaps.InlineANSI:
 		data, err := cachedANSIFrame(state, frame, frameIndex, cols, rows)
 		if err == nil {
 			_, _ = out.Write(data)
 		}
-	} else {
+	case termcaps.InlineKitty:
 		kitty.SendFrame(out, state.activeImageID, frame, cols, rows)
+	case termcaps.InlineNone, termcaps.InlineIterm:
 	}
 	restoreCursor(out)
 }
