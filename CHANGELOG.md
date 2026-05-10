@@ -10,11 +10,14 @@
 - TUI: add `c` to copy the selected GIF to the clipboard. Thanks @erazemk.
 - TUI/search thumbs: add Sixel inline image support for Windows Terminal, WezTerm, and other Sixel-capable terminals.
   Thanks @cabiamdos.
+- TUI: add a truecolor ANSI preview fallback for Windows/remote terminals where Sixel is unavailable.
 
 ### Fixes
 
 - Search: let `auto` fall back to KLIPY when a configured Giphy key fails.
 - TUI: improve bottom hint label contrast for Solarized dark and similar themes.
+- TUI: decode GIF frames for Sixel/ANSI software playback instead of leaving the preview blank.
+- TUI: fall back to `COLUMNS`/`LINES` when terminal size probing fails under Windows `mintty`.
 
 ### Docs
 

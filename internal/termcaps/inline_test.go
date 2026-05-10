@@ -30,6 +30,18 @@ func TestDetectInlineSixelOverride(t *testing.T) {
 	}
 }
 
+func TestDetectInlineANSIOverride(t *testing.T) {
+	getenv := func(k string) string {
+		if k == "GIFGREP_INLINE" {
+			return "ansi"
+		}
+		return ""
+	}
+	if got := DetectInline(getenv); got != InlineANSI {
+		t.Fatalf("expected ansi, got %v", got)
+	}
+}
+
 func TestDetectInlineKittyEnv(t *testing.T) {
 	getenv := func(k string) string {
 		switch k {

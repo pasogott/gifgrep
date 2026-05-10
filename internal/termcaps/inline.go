@@ -13,6 +13,7 @@ const (
 	InlineKitty
 	InlineIterm
 	InlineSixel
+	InlineANSI
 )
 
 func (p InlineProtocol) String() string {
@@ -25,6 +26,8 @@ func (p InlineProtocol) String() string {
 		return "iterm"
 	case InlineSixel:
 		return "sixel"
+	case InlineANSI:
+		return "ansi"
 	default:
 		return "none"
 	}
@@ -42,6 +45,8 @@ func DetectInline(getenv func(string) string) InlineProtocol {
 		return InlineIterm
 	case "sixel":
 		return InlineSixel
+	case "ansi", "truecolor":
+		return InlineANSI
 	case "none", "off", "false", "0":
 		return InlineNone
 	case "", "auto":

@@ -3,6 +3,7 @@ package tui
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"strings"
 	"testing"
 	"time"
@@ -44,6 +45,50 @@ func TestEnsureVisible(t *testing.T) {
 	ensureVisible(state)
 	if state.scroll != 0 {
 		t.Fatalf("scroll should reset")
+	}
+}
+
+func TestTerminalSizeFallsBackToEnv(t *testing.T) {
+	t.Setenv("COLUMNS", "118")
+	t.Setenv("LINES", "40")
+	cols, rows := terminalSize(Env{
+		GetSize: func(int) (int, int, error) {
+			return 0, 0, errors.New("size unavailable")
+		},
+	})
+	if cols != 118 || rows != 40 {
+		t.Fatalf("unexpected fallback size: %d %d", cols, rows)
+	}
+}
+
+func TestCachedANSIFrameRendersOncePerFrameSize(t *testing.T) {
+	renderCalls := 0
+	old := renderANSIFrameFn
+	renderANSIFrameFn = func([]byte, int, int) ([]byte, error) {
+		renderCalls++
+		return []byte("frame"), nil
+	}
+	defer func() { renderANSIFrameFn = old }()
+
+	state := &appState{activeImageID: 7}
+	frame := gifdecode.Frame{PNG: []byte("png")}
+	for i := 0; i < 2; i++ {
+		data, err := cachedANSIFrame(state, frame, 3, 10, 5)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(data) != "frame" {
+			t.Fatalf("data=%q", data)
+		}
+	}
+	if renderCalls != 1 {
+		t.Fatalf("renderCalls=%d", renderCalls)
+	}
+	if _, err := cachedANSIFrame(state, frame, 3, 11, 5); err != nil {
+		t.Fatal(err)
+	}
+	if renderCalls != 2 {
+		t.Fatalf("resize should render again, renderCalls=%d", renderCalls)
 	}
 }
 

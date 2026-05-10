@@ -83,9 +83,11 @@ gifgrep sheet <gif> [--frames <N>] [--cols <N>] [--padding <px>] [-o <file>|-]
   - **Kitty / Ghostty:** Kitty graphics protocol.
   - **iTerm2:** OSC 1337 inline images.
   - **Windows Terminal / WezTerm / Sixel-capable terminals:** Sixel graphics.
+  - **Truecolor terminals:** ANSI half-block fallback (`GIFGREP_INLINE=ansi`).
 - **Kitty:** uploads the full animation (terminal plays it).
 - **Ghostty:** software playback (gifgrep sends frames on a timer).
 - **Sixel:** software playback (gifgrep redraws frames into the same cell area).
+- **ANSI:** software playback (gifgrep redraws truecolor half-block frames).
 
 ## How inline previews work (Kitty graphics protocol)
 
@@ -104,6 +106,12 @@ iTerm2 uses a different protocol (OSC 1337). See `docs/iterm.md`.
 
 Sixel-capable terminals use DEC Sixel graphics. See `docs/sixel.md`.
 
+## ANSI fallback
+
+`GIFGREP_INLINE=ansi` renders GIF frames as truecolor half-blocks. It is lower
+resolution than a bitmap protocol, but works in plain terminals that support
+24-bit color.
+
 ## JSON output
 
 `--json` prints an array with: `id`, `title`, `url`, `preview_url`, `tags`, `width`, `height`.
@@ -113,7 +121,7 @@ Sixel-capable terminals use DEC Sixel graphics. See `docs/sixel.md`.
 - `KLIPY_API_KEY` (required for `--source klipy` / `--source tenor`)
 - `GIPHY_API_KEY` (required for `--source giphy`)
 - `auto` uses Giphy first when keyed, then KLIPY if Giphy is unavailable.
-- `GIFGREP_INLINE=kitty|iterm|sixel|none` (override terminal detection)
+- `GIFGREP_INLINE=kitty|iterm|sixel|ansi|none` (override terminal detection)
 - `GIFGREP_SOFTWARE_ANIM=1` (force software playback; default on Ghostty)
 - `GIFGREP_CELL_ASPECT=0.5` (tweak preview cell geometry)
 

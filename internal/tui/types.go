@@ -30,6 +30,13 @@ type gifCacheEntry struct {
 	Height int
 }
 
+type ansiFrameKey struct {
+	animID uint32
+	frame  int
+	cols   int
+	rows   int
+}
+
 type appState struct {
 	query         string
 	tagline       string
@@ -43,6 +50,7 @@ type appState struct {
 	currentAnim   *gifAnimation
 	inline        termcaps.InlineProtocol
 	cache         map[string]*gifCacheEntry
+	ansiFrames    map[ansiFrameKey][]byte
 	savedPaths    map[string]string
 	tempPaths     map[string]string
 	tempDir       string

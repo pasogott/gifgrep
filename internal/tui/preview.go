@@ -62,7 +62,7 @@ func loadSelectedImage(state *appState) {
 		}
 		w, h := gifSize(data)
 		entry = &gifCacheEntry{RawGIF: data, Width: w, Height: h}
-		if state.inline == termcaps.InlineKitty {
+		if inlineNeedsDecodedFrames(state.inline) {
 			decoded, err := gifdecode.Decode(data, gifdecode.DefaultOptions())
 			if err != nil {
 				state.status = "Image error: " + err.Error()
@@ -75,7 +75,7 @@ func loadSelectedImage(state *appState) {
 		}
 		state.cache[source] = entry
 	}
-	if entry != nil && entry.Frames == nil && state.inline == termcaps.InlineKitty {
+	if entry != nil && entry.Frames == nil && inlineNeedsDecodedFrames(state.inline) {
 		decoded, err := gifdecode.Decode(entry.RawGIF, gifdecode.DefaultOptions())
 		if err != nil {
 			state.status = "Image error: " + err.Error()
@@ -104,9 +104,14 @@ func loadSelectedImage(state *appState) {
 		state.currentAnim.Height = entry.Height
 	}
 	state.nextImageID++
+	state.ansiFrames = nil
 	state.manualAnim = false
 	state.manualFrame = 0
 	state.manualNext = time.Time{}
 	state.previewNeedsSend = true
 	state.previewDirty = true
+}
+
+func inlineNeedsDecodedFrames(inline termcaps.InlineProtocol) bool {
+	return inline == termcaps.InlineKitty || inline == termcaps.InlineSixel || inline == termcaps.InlineANSI
 }

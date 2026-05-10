@@ -7,10 +7,12 @@ import (
 	"io"
 	"math"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/steipete/gifgrep/gifdecode"
+	"github.com/steipete/gifgrep/internal/ansi"
 	"github.com/steipete/gifgrep/internal/assets"
 	"github.com/steipete/gifgrep/internal/iterm"
 	"github.com/steipete/gifgrep/internal/kitty"
@@ -123,7 +125,7 @@ func newAppState(inline termcaps.InlineProtocol, opts model.Options) *appState {
 		renderDirty:     true,
 		nextImageID:     1,
 		inline:          inline,
-		useSoftwareAnim: inline == termcaps.InlineSixel || (inline == termcaps.InlineKitty && useSoftwareAnimation()),
+		useSoftwareAnim: inline == termcaps.InlineSixel || inline == termcaps.InlineANSI || (inline == termcaps.InlineKitty && useSoftwareAnimation()),
 		useColor:        opts.Color != "never",
 		opts:            opts,
 	}
@@ -180,15 +182,29 @@ func handlePrefetchResult(state *appState, res prefetchResult) {
 }
 
 func updateSizeIfNeeded(state *appState, env Env) {
-	if cols, rows, err := env.GetSize(env.FD); err == nil {
-		if rows != state.lastRows || cols != state.lastCols {
-			state.lastRows = rows
-			state.lastCols = cols
-			ensureVisible(state)
-			state.renderDirty = true
-			state.previewDirty = true
-		}
+	cols, rows := terminalSize(env)
+	if rows <= 0 || cols <= 0 {
+		return
 	}
+	if rows != state.lastRows || cols != state.lastCols {
+		state.lastRows = rows
+		state.lastCols = cols
+		ensureVisible(state)
+		state.renderDirty = true
+		state.previewDirty = true
+	}
+}
+
+func terminalSize(env Env) (int, int) {
+	if cols, rows, err := env.GetSize(env.FD); err == nil && cols > 0 && rows > 0 {
+		return cols, rows
+	}
+	cols, _ := strconv.Atoi(strings.TrimSpace(os.Getenv("COLUMNS")))
+	rows, _ := strconv.Atoi(strings.TrimSpace(os.Getenv("LINES")))
+	if cols > 0 && rows > 0 {
+		return cols, rows
+	}
+	return 0, 0
 }
 
 func renderIfNeeded(state *appState, out *bufio.Writer) {
@@ -224,7 +240,7 @@ func errUnsupportedInline(getenv func(string) string) error {
 	termProgram := strings.TrimSpace(getenv("TERM_PROGRAM"))
 	term := strings.TrimSpace(getenv("TERM"))
 	return fmt.Errorf(
-		"gifgrep tui needs inline image support.\n\nSupported terminals:\n  - Kitty (Kitty graphics protocol)\n  - Ghostty (Kitty graphics protocol)\n  - iTerm2 (OSC 1337 inline images)\n  - Windows Terminal / WezTerm with Sixel\n\nDetected:\n  TERM_PROGRAM=%q\n  TERM=%q\n\nSee: docs/kitty.md, docs/iterm.md, and docs/sixel.md\n\nTip: You can force detection with GIFGREP_INLINE=kitty|iterm|sixel|none",
+		"gifgrep tui needs inline image support.\n\nSupported terminals:\n  - Kitty (Kitty graphics protocol)\n  - Ghostty (Kitty graphics protocol)\n  - iTerm2 (OSC 1337 inline images)\n  - Windows Terminal / WezTerm with Sixel\n  - Truecolor ANSI fallback\n\nDetected:\n  TERM_PROGRAM=%q\n  TERM=%q\n\nSee: docs/kitty.md, docs/iterm.md, and docs/sixel.md\n\nTip: You can force detection with GIFGREP_INLINE=kitty|iterm|sixel|ansi|none",
 		termProgram,
 		term,
 	)
@@ -261,7 +277,7 @@ func runWith(env Env, opts model.Options, query string) error {
 
 	state := newAppState(inline, opts)
 	defer cleanupTempDir(state)
-	if cols, rows, err := env.GetSize(env.FD); err == nil {
+	if cols, rows := terminalSize(env); cols > 0 && rows > 0 {
 		state.lastRows = rows
 		state.lastCols = cols
 	}
@@ -940,7 +956,7 @@ func drawPreviewSoftware(state *appState, out *bufio.Writer, cols, rows int, row
 		state.manualAnim = true
 		state.manualFrame = 0
 		frame := state.currentAnim.Frames[state.manualFrame]
-		sendPreviewFrame(state, out, frame, cols, rows, row, col)
+		sendPreviewFrame(state, out, frame, state.manualFrame, cols, rows, row, col)
 		state.manualNext = time.Now().Add(frame.Delay)
 		state.previewNeedsSend = false
 		state.previewDirty = false
@@ -950,7 +966,7 @@ func drawPreviewSoftware(state *appState, out *bufio.Writer, cols, rows int, row
 	}
 	if state.previewDirty || state.lastPreview.cols != cols || state.lastPreview.rows != rows {
 		frame := state.currentAnim.Frames[state.manualFrame]
-		sendPreviewFrame(state, out, frame, cols, rows, row, col)
+		sendPreviewFrame(state, out, frame, state.manualFrame, cols, rows, row, col)
 		state.previewDirty = false
 		state.lastPreview.cols = cols
 		state.lastPreview.rows = rows
@@ -958,19 +974,41 @@ func drawPreviewSoftware(state *appState, out *bufio.Writer, cols, rows int, row
 }
 
 var sendSixelFrameFn = sixelgfx.SendFrame
+var renderANSIFrameFn = ansi.RenderFrame
 
-func sendPreviewFrame(state *appState, out *bufio.Writer, frame gifdecode.Frame, cols, rows int, row, col int) {
-	if state.inline == termcaps.InlineSixel {
+func sendPreviewFrame(state *appState, out *bufio.Writer, frame gifdecode.Frame, frameIndex int, cols, rows int, row, col int) {
+	if state.inline == termcaps.InlineSixel || state.inline == termcaps.InlineANSI {
 		clearItermRectFn(out, row, col, cols, rows)
 	}
 	saveCursor(out)
 	moveCursor(out, row, col)
 	if state.inline == termcaps.InlineSixel {
 		_ = sendSixelFrameFn(out, frame, cols, rows)
+	} else if state.inline == termcaps.InlineANSI {
+		data, err := cachedANSIFrame(state, frame, frameIndex, cols, rows)
+		if err == nil {
+			_, _ = out.Write(data)
+		}
 	} else {
 		kitty.SendFrame(out, state.activeImageID, frame, cols, rows)
 	}
 	restoreCursor(out)
+}
+
+func cachedANSIFrame(state *appState, frame gifdecode.Frame, frameIndex int, cols, rows int) ([]byte, error) {
+	if state.ansiFrames == nil {
+		state.ansiFrames = map[ansiFrameKey][]byte{}
+	}
+	key := ansiFrameKey{animID: state.activeImageID, frame: frameIndex, cols: cols, rows: rows}
+	if data, ok := state.ansiFrames[key]; ok {
+		return data, nil
+	}
+	data, err := renderANSIFrameFn(frame.PNG, cols, rows)
+	if err != nil {
+		return nil, err
+	}
+	state.ansiFrames[key] = data
+	return data, nil
 }
 
 func advanceManualAnimation(state *appState, out *bufio.Writer) {
@@ -992,7 +1030,7 @@ func advanceManualAnimation(state *appState, out *bufio.Writer) {
 	}
 	state.manualFrame = (state.manualFrame + 1) % len(state.currentAnim.Frames)
 	frame := state.currentAnim.Frames[state.manualFrame]
-	sendPreviewFrame(state, out, frame, state.lastPreview.cols, state.lastPreview.rows, state.previewRow, state.previewCol)
+	sendPreviewFrame(state, out, frame, state.manualFrame, state.lastPreview.cols, state.lastPreview.rows, state.previewRow, state.previewCol)
 	state.manualNext = now.Add(frame.Delay)
 	_ = out.Flush()
 }

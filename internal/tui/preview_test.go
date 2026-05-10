@@ -106,6 +106,29 @@ func TestLoadSelectedImageUsesDownloadedFile(t *testing.T) {
 	}
 }
 
+func TestLoadSelectedImageDecodesFramesForSixel(t *testing.T) {
+	data := testutil.MakeTestGIF()
+	state := &appState{
+		results: []model.Result{{
+			ID:         "id1",
+			Title:      "cached",
+			PreviewURL: "https://example.test/preview.gif",
+		}},
+		selected: 0,
+		inline:   termcaps.InlineSixel,
+		cache:    map[string]*gifCacheEntry{},
+	}
+	testutil.WithTransport(t, &testutil.FakeTransport{GIFData: data}, func() {
+		loadSelectedImage(state)
+	})
+	if state.currentAnim == nil || len(state.currentAnim.Frames) == 0 {
+		t.Fatalf("expected decoded Sixel frames")
+	}
+	if !state.previewNeedsSend || !state.previewDirty {
+		t.Fatalf("expected Sixel preview to need send")
+	}
+}
+
 func TestLoadSelectedImageUsesTempFile(t *testing.T) {
 	data := testutil.MakeTestGIF()
 	tmp, err := os.CreateTemp(t.TempDir(), "gifgrep-*.gif")
