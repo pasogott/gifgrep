@@ -973,8 +973,10 @@ func drawPreviewSoftware(state *appState, out *bufio.Writer, cols, rows int, row
 	}
 }
 
-var sendSixelFrameFn = sixelgfx.SendFrame
-var renderANSIFrameFn = ansi.RenderFrame
+var (
+	sendSixelFrameFn  = sixelgfx.SendFrame
+	renderANSIFrameFn = ansi.RenderFrame
+)
 
 func sendPreviewFrame(state *appState, out *bufio.Writer, frame gifdecode.Frame, frameIndex int, cols, rows int, row, col int) {
 	if state.inline == termcaps.InlineSixel || state.inline == termcaps.InlineANSI {
