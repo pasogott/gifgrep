@@ -5,6 +5,7 @@
 ### Docs
 
 - Replace the GitHub Pages landing page with a generated docs site.
+- Refresh the TUI screenshot with a Ghostty capture from a macOS Crabbox.
 
 ## 0.3.0 - 2026-05-10
 
