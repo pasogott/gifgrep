@@ -197,6 +197,7 @@ func rootHelpExtras() []string {
 		"Environment:",
 		"  KLIPY_API_KEY  required for --source klipy/tenor",
 		"  GIPHY_API_KEY  required for --source giphy",
+		"  auto tries Giphy first, then KLIPY when configured",
 	}
 }
 

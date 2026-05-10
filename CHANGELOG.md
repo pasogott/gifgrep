@@ -12,6 +12,10 @@
 
 - Search: let `auto` fall back to KLIPY when a configured Giphy key fails.
 
+### Docs
+
+- Document `auto` provider fallback from Giphy to KLIPY.
+
 ## 0.2.3 - 2026-02-04
 ### Fixes
 - TUI: after download, preview reloads from the saved full-res GIF.
