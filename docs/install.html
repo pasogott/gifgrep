@@ -182,6 +182,7 @@ body:not(.home) .doc>h1:first-child{display:none}
 .doc pre .hl-m{color:var(--hl-meta);font-weight:600}
 .doc pre .hl-p{color:var(--hl-prompt);user-select:none}
 .doc pre .hl-cmd{color:var(--hl-keyword);font-weight:600}
+.doc pre .hl-url{color:var(--hl-string)}
 .doc blockquote{margin:1.4em 0;padding:10px 16px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;color:var(--text)}
 .doc blockquote p:last-child{margin-bottom:0}
 .doc table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:.92em}
@@ -283,7 +284,7 @@ body:not(.home) .doc>h1:first-child{display:none}
 </ul>
 <p>Unpack, drop the binary on your <code>PATH</code>, done.</p>
 <h2 id="from-source"><a class="anchor" href="#from-source" aria-label="Anchor link">#</a>From source</h2>
-<pre><code class="language-bash"><span class="hl-cmd">git</span> clone https://github.com/steipete/<span class="hl-cmd">gifgrep</span>.<span class="hl-cmd">git</span>
+<pre><code class="language-bash"><span class="hl-cmd">git</span> clone <span class="hl-url">https://github.com/steipete/gifgrep.git</span>
 <span class="hl-cmd">cd</span> <span class="hl-cmd">gifgrep</span>
 <span class="hl-cmd">make</span> build      <span class="hl-c"> # builds ./bin/gifgrep</span>
 ./bin/<span class="hl-cmd">gifgrep</span> <span class="hl-f">--version</span></code></pre>

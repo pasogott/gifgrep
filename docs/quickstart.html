@@ -182,6 +182,7 @@ body:not(.home) .doc>h1:first-child{display:none}
 .doc pre .hl-m{color:var(--hl-meta);font-weight:600}
 .doc pre .hl-p{color:var(--hl-prompt);user-select:none}
 .doc pre .hl-cmd{color:var(--hl-keyword);font-weight:600}
+.doc pre .hl-url{color:var(--hl-string)}
 .doc blockquote{margin:1.4em 0;padding:10px 16px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;color:var(--text)}
 .doc blockquote p:last-child{margin-bottom:0}
 .doc table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:.92em}
@@ -302,7 +303,7 @@ body:not(.home) .doc>h1:first-child{display:none}
 <h2 id="6-pull-frames-out-of-a-gif"><a class="anchor" href="#6-pull-frames-out-of-a-gif" aria-label="Anchor link">#</a>6. Pull frames out of a GIF</h2>
 <pre><code class="language-bash"><span class="hl-cmd">gifgrep</span> still <span class="hl-cmd">cat</span>.gif <span class="hl-f">--at</span> <span class="hl-n">1</span>.5s <span class="hl-f">-o</span> still.png      <span class="hl-c"> # one frame at 1.5s</span>
 <span class="hl-cmd">gifgrep</span> sheet <span class="hl-cmd">cat</span>.gif <span class="hl-f">--frames</span> <span class="hl-n">9</span> <span class="hl-f">--cols</span> <span class="hl-n">3</span>         <span class="hl-c"> # 3×3 contact sheet</span>
-<span class="hl-cmd">gifgrep</span> still https://media.giphy.com/x.gif <span class="hl-f">--at</span> <span class="hl-n">0</span> <span class="hl-f">-o</span> - &gt; frame.png</code></pre>
+<span class="hl-cmd">gifgrep</span> still <span class="hl-url">https://media.giphy.com/x.gif</span> <span class="hl-f">--at</span> <span class="hl-n">0</span> <span class="hl-f">-o</span> - &gt; frame.png</code></pre>
 <p>Both <a href="still.html"><code>still</code></a> and <a href="sheet.html"><code>sheet</code></a> work on local files <strong>or</strong> URLs, and don&#39;t need a provider key.</p>
 <h2 id="where-next"><a class="anchor" href="#where-next" aria-label="Anchor link">#</a>Where next</h2>
 <ul>

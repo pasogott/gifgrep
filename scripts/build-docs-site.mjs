@@ -673,6 +673,8 @@ function highlightShellLine(line) {
   let working = line;
   working = working.replace(/(?:'[^']*'|"[^"]*")/g, (m) => stashAdd(m, "hl-s"));
   working = working.replace(/\s#.*$/g, (m) => stashAdd(m, "hl-c"));
+  working = working.replace(/https?:\/\/[^\s]+/g, (m) => stashAdd(m, "hl-url"));
+  working = working.replace(/\[[^\]]+\]/g, (m) => stashAdd(m, "hl-m"));
   working = working.replace(/(^|\s)(--?[A-Za-z][A-Za-z0-9-]*)/g, (_, lead, flag) => `${escapeHtml(lead)}${stashAdd(flag, "hl-f")}`);
   working = working.replace(/\b(gifgrep|brew|go|git|gh|make|sudo|cd|export|cat|curl|jq|ls|mv|cp|rm|mkdir|docker|tail|node|npm|pnpm|yarn)\b/g, (m) => stashAdd(m, "hl-cmd"));
   working = working.replace(/\b(\d+(?:\.\d+)?)\b/g, (m) => stashAdd(m, "hl-n"));

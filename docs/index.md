@@ -6,7 +6,7 @@ description: "gifgrep is a tiny Go CLI/TUI that searches animated GIFs from GIPH
 
 ![gifgrep TUI with inline animated previews](assets/gifgrep-tui.mp4)
 
-```
+```console
 $ gifgrep cats -m 3
 https://media.giphy.com/.../cat-typing.gif
 https://media.giphy.com/.../cat-yes.gif

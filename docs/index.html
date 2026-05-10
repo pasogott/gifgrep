@@ -182,6 +182,7 @@ body:not(.home) .doc>h1:first-child{display:none}
 .doc pre .hl-m{color:var(--hl-meta);font-weight:600}
 .doc pre .hl-p{color:var(--hl-prompt);user-select:none}
 .doc pre .hl-cmd{color:var(--hl-keyword);font-weight:600}
+.doc pre .hl-url{color:var(--hl-string)}
 .doc blockquote{margin:1.4em 0;padding:10px 16px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;color:var(--text)}
 .doc blockquote p:last-child{margin-bottom:0}
 .doc table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:.92em}
@@ -277,18 +278,18 @@ body:not(.home) .doc>h1:first-child{display:none}
       </header>
       <div class="doc-grid doc-grid-home">
         <article class="doc doc-home"><p><video src="assets/gifgrep-tui.mp4" poster="assets/gifgrep-tui.png" aria-label="gifgrep TUI with inline animated previews" autoplay muted loop playsinline></video></p>
-<pre><code class="language-text">$ gifgrep cats -m 3
-https://media.giphy.com/.../cat-typing.gif
-https://media.giphy.com/.../cat-yes.gif
-https://media.giphy.com/.../cat-stare.gif
+<pre><code class="language-console"><span class="hl-p">$</span> <span class="hl-cmd">gifgrep</span> cats <span class="hl-f">-m</span> <span class="hl-n">3</span>
+<span class="hl-url">https://media.giphy.com/.../cat-typing.gif</span>
+<span class="hl-url">https://media.giphy.com/.../cat-yes.gif</span>
+<span class="hl-url">https://media.giphy.com/.../cat-stare.gif</span>
 
-$ gifgrep tui &quot;office handshake&quot;
-   ┌─ gifgrep ───────────────────────┐
+<span class="hl-p">$</span> <span class="hl-cmd">gifgrep</span> tui <span class="hl-s">&quot;office handshake&quot;</span>
+   ┌─ <span class="hl-cmd">gifgrep</span> ───────────────────────┐
    │ /office handshake               │
    │ ▸ Pam &amp; Jim handshake.gif       │
    │   The Office handshake meme.gif │
    │   Schrute approves.gif          │
-   │   [animated preview here]       │
+   │   <span class="hl-m">[animated preview here]</span>       │
    └─────────────────────────────────┘</code></pre>
 <h2 id="try-it"><a class="anchor" href="#try-it" aria-label="Anchor link">#</a>Try it</h2>
 <pre><code class="language-bash"><span class="hl-cmd">brew</span> install steipete/tap/<span class="hl-cmd">gifgrep</span>
