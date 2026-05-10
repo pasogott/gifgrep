@@ -16,6 +16,11 @@
 
 - Document `auto` provider fallback from Giphy to KLIPY.
 
+### Dev
+
+- E2E: make terminal capability checks deterministic by default, with real GUI app checks opt-in.
+- E2E: harden the Ghostty web snapshot helper and verify the KLIPY TUI renders.
+
 ## 0.2.3 - 2026-02-04
 ### Fixes
 - TUI: after download, preview reloads from the saved full-res GIF.
