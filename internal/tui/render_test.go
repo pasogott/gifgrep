@@ -130,6 +130,54 @@ func TestDrawPreviewItermClearsOldRectOnResend(t *testing.T) {
 	}
 }
 
+func TestDrawPreviewSixelUsesSoftwareFrameSender(t *testing.T) {
+	prevSend := sendSixelFrameFn
+	prevClear := clearItermRectFn
+	t.Cleanup(func() {
+		sendSixelFrameFn = prevSend
+		clearItermRectFn = prevClear
+	})
+
+	var sends int
+	var clears int
+	sendSixelFrameFn = func(_ *bufio.Writer, frame gifdecode.Frame, cols, rows int) error {
+		sends++
+		if string(frame.PNG) != string([]byte{1, 2, 3}) {
+			t.Fatalf("unexpected frame")
+		}
+		if cols != 20 || rows != 8 {
+			t.Fatalf("unexpected size %dx%d", cols, rows)
+		}
+		return nil
+	}
+	clearItermRectFn = func(_ *bufio.Writer, _, _, _, _ int) { clears++ }
+
+	state := &appState{
+		inline:          termcaps.InlineSixel,
+		useSoftwareAnim: true,
+		currentAnim: &gifAnimation{
+			ID:     1,
+			Frames: []gifdecode.Frame{{PNG: []byte{1, 2, 3}, Delay: 80 * time.Millisecond}},
+			Width:  1,
+			Height: 1,
+		},
+		previewNeedsSend: true,
+	}
+	var buf bytes.Buffer
+	out := bufio.NewWriter(&buf)
+
+	drawPreview(state, out, 20, 8, 2, 2)
+	if sends != 1 {
+		t.Fatalf("expected 1 sixel send, got %d", sends)
+	}
+	if clears != 1 {
+		t.Fatalf("expected 1 clear, got %d", clears)
+	}
+	if state.previewNeedsSend || state.previewDirty {
+		t.Fatalf("expected preview flags cleared")
+	}
+}
+
 func TestDrawPreviewItermClearsNewRectOnExpand(t *testing.T) {
 	prev := clearItermRectFn
 	t.Cleanup(func() { clearItermRectFn = prev })

@@ -12,6 +12,7 @@ import (
 	"github.com/steipete/gifgrep/internal/iterm"
 	"github.com/steipete/gifgrep/internal/kitty"
 	"github.com/steipete/gifgrep/internal/model"
+	"github.com/steipete/gifgrep/internal/sixel"
 	"github.com/steipete/gifgrep/internal/termcaps"
 	"golang.org/x/term"
 )
@@ -63,6 +64,7 @@ var (
 			Stretch:     true,
 		})
 	}
+	sendThumbSixel = sixel.SendFrame
 )
 
 func resolveOutputFormat(opts model.Options, stdout io.Writer) outputFormat {
@@ -291,7 +293,7 @@ func prepareThumbData(thumbs termcaps.InlineProtocol, data []byte, src string, r
 			return nil, fmt.Errorf("unsupported image")
 		}
 		return data, nil
-	case termcaps.InlineKitty:
+	case termcaps.InlineKitty, termcaps.InlineSixel:
 		if len(data) == 0 {
 			return nil, fmt.Errorf("empty image")
 		}
@@ -322,9 +324,29 @@ func sendThumb(out *bufio.Writer, thumbs termcaps.InlineProtocol, id uint32, dat
 		}
 		sendThumbKitty(out, id, decoded.Frames[0], cols, rows)
 		return nil
+	case termcaps.InlineSixel:
+		decoded, err := decodeThumb(data)
+		if err != nil {
+			return err
+		}
+		if decoded == nil || len(decoded.Frames) == 0 {
+			return fmt.Errorf("no frames")
+		}
+		saveCursor(out)
+		err = sendThumbSixel(out, decoded.Frames[0], cols, rows)
+		restoreCursor(out)
+		return err
 	default:
 		return fmt.Errorf("inline thumbnails not supported")
 	}
+}
+
+func saveCursor(out *bufio.Writer) {
+	_, _ = fmt.Fprint(out, "\x1b7")
+}
+
+func restoreCursor(out *bufio.Writer) {
+	_, _ = fmt.Fprint(out, "\x1b8")
 }
 
 func thumbIndentCols(thumbs termcaps.InlineProtocol, cols int) int {

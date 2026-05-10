@@ -197,6 +197,7 @@ func rootHelpExtras() []string {
 		"Environment:",
 		"  KLIPY_API_KEY  required for --source klipy/tenor",
 		"  GIPHY_API_KEY  required for --source giphy",
+		"  GIFGREP_INLINE kitty|iterm|sixel|none",
 		"  auto tries Giphy first, then KLIPY when configured",
 	}
 }
@@ -224,6 +225,7 @@ func tuiHelpExtras() []string {
 		"  /      edit search",
 		"  ↑↓     select",
 		"  d      download selection",
+		"  c      copy selection to clipboard",
 		"  f      reveal last download in file manager",
 		"  q      quit",
 		"",

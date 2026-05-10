@@ -36,7 +36,7 @@ go install github.com/steipete/gifgrep/cmd/gifgrep@latest
 ## Features
 
 - Scriptable search: readable plain output by default (TTY), plus `--format`, `--json`, `--max`, `--source`.
-- Inline thumbnails in search output: `--thumbs` (Kitty graphics; TTY only; still frame).
+- Inline thumbnails in search output: `--thumbs` (Kitty/iTerm2/Sixel; TTY only; still frame).
 - Download to `~/Downloads`: `--download` (CLI), `d` (TUI). Reveal with `--reveal` (CLI/TUI) or `f` (TUI).
 - TUI browser: inline preview, quick download, reveal last download.
 - Stills: `still` extracts one frame; `sheet` creates a PNG grid (`--frames`, `--cols`, `--padding`).
@@ -82,8 +82,10 @@ gifgrep sheet <gif> [--frames <N>] [--cols <N>] [--padding <px>] [-o <file>|-]
 - Inline previews work in terminals that support inline images:
   - **Kitty / Ghostty:** Kitty graphics protocol.
   - **iTerm2:** OSC 1337 inline images.
+  - **Windows Terminal / WezTerm / Sixel-capable terminals:** Sixel graphics.
 - **Kitty:** uploads the full animation (terminal plays it).
 - **Ghostty:** software playback (gifgrep sends frames on a timer).
+- **Sixel:** software playback (gifgrep redraws frames into the same cell area).
 
 ## How inline previews work (Kitty graphics protocol)
 
@@ -98,6 +100,10 @@ gifgrep decodes GIFs to PNG frames and streams them into the terminal via Kitty 
 
 iTerm2 uses a different protocol (OSC 1337). See `docs/iterm.md`.
 
+## Sixel inline images
+
+Sixel-capable terminals use DEC Sixel graphics. See `docs/sixel.md`.
+
 ## JSON output
 
 `--json` prints an array with: `id`, `title`, `url`, `preview_url`, `tags`, `width`, `height`.
@@ -107,6 +113,7 @@ iTerm2 uses a different protocol (OSC 1337). See `docs/iterm.md`.
 - `KLIPY_API_KEY` (required for `--source klipy` / `--source tenor`)
 - `GIPHY_API_KEY` (required for `--source giphy`)
 - `auto` uses Giphy first when keyed, then KLIPY if Giphy is unavailable.
+- `GIFGREP_INLINE=kitty|iterm|sixel|none` (override terminal detection)
 - `GIFGREP_SOFTWARE_ANIM=1` (force software playback; default on Ghostty)
 - `GIFGREP_CELL_ASPECT=0.5` (tweak preview cell geometry)
 

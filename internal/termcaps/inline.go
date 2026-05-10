@@ -12,6 +12,7 @@ const (
 	InlineNone InlineProtocol = iota
 	InlineKitty
 	InlineIterm
+	InlineSixel
 )
 
 func (p InlineProtocol) String() string {
@@ -22,6 +23,8 @@ func (p InlineProtocol) String() string {
 		return "kitty"
 	case InlineIterm:
 		return "iterm"
+	case InlineSixel:
+		return "sixel"
 	default:
 		return "none"
 	}
@@ -37,6 +40,8 @@ func DetectInline(getenv func(string) string) InlineProtocol {
 		return InlineKitty
 	case "iterm", "iterm2":
 		return InlineIterm
+	case "sixel":
+		return InlineSixel
 	case "none", "off", "false", "0":
 		return InlineNone
 	case "", "auto":
@@ -55,6 +60,9 @@ func DetectInline(getenv func(string) string) InlineProtocol {
 	if strings.Contains(termProgram, "iterm") || strings.TrimSpace(getenv("ITERM_SESSION_ID")) != "" {
 		return InlineIterm
 	}
+	if strings.Contains(termProgram, "wezterm") || strings.TrimSpace(getenv("WT_SESSION")) != "" {
+		return InlineSixel
+	}
 	if strings.Contains(termProgram, "apple_terminal") {
 		return InlineNone
 	}
@@ -62,6 +70,9 @@ func DetectInline(getenv func(string) string) InlineProtocol {
 	termEnv := strings.ToLower(getenv("TERM"))
 	if strings.Contains(termEnv, "xterm-kitty") || strings.Contains(termEnv, "ghostty") {
 		return InlineKitty
+	}
+	if strings.Contains(termEnv, "sixel") {
+		return InlineSixel
 	}
 
 	return InlineNone

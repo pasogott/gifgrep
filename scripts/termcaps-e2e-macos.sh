@@ -74,6 +74,7 @@ run_check "override-none" "none" GIFGREP_INLINE=none
 run_check "override-kitty" "kitty" GIFGREP_INLINE=kitty
 run_check "override-iterm" "iterm" GIFGREP_INLINE=iterm
 run_check "override-iterm2" "iterm" GIFGREP_INLINE=iterm2
+run_check "override-sixel" "sixel" GIFGREP_INLINE=sixel
 
 # Environment detection without GUI automation.
 run_check "env-apple-terminal" "none" TERM_PROGRAM=Apple_Terminal
@@ -81,10 +82,13 @@ run_check "env-iterm-program" "iterm" TERM_PROGRAM=iTerm.app
 run_check "env-iterm-session" "iterm" ITERM_SESSION_ID=test-session
 run_check "env-kitty-window" "kitty" KITTY_WINDOW_ID=test-window
 run_check "env-ghostty-program" "kitty" TERM_PROGRAM=Ghostty
+run_check "env-windows-terminal" "sixel" WT_SESSION=test-session
+run_check "env-wezterm-program" "sixel" TERM_PROGRAM=WezTerm
 
 # PTY smoke: proves the checker also works when stdin/stdout are terminal-like.
 run_pty_check "pty-none" "none" GIFGREP_INLINE=none
 run_pty_check "pty-kitty-override" "kitty" GIFGREP_INLINE=kitty
+run_pty_check "pty-sixel-override" "sixel" GIFGREP_INLINE=sixel
 
 echo "Outputs:"
 ls -1 "$tmp_dir"/*.json 2>/dev/null || true

@@ -8,6 +8,8 @@
   `--source klipy` is available directly, and `KLIPY_API_KEY` is now required for that provider.
   Thanks @ZeterMordio.
 - TUI: add `c` to copy the selected GIF to the clipboard. Thanks @erazemk.
+- TUI/search thumbs: add Sixel inline image support for Windows Terminal, WezTerm, and other Sixel-capable terminals.
+  Thanks @cabiamdos.
 
 ### Fixes
 

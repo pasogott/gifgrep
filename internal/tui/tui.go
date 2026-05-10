@@ -16,6 +16,7 @@ import (
 	"github.com/steipete/gifgrep/internal/kitty"
 	"github.com/steipete/gifgrep/internal/model"
 	"github.com/steipete/gifgrep/internal/search"
+	sixelgfx "github.com/steipete/gifgrep/internal/sixel"
 	"github.com/steipete/gifgrep/internal/termcaps"
 	"golang.org/x/term"
 )
@@ -122,7 +123,7 @@ func newAppState(inline termcaps.InlineProtocol, opts model.Options) *appState {
 		renderDirty:     true,
 		nextImageID:     1,
 		inline:          inline,
-		useSoftwareAnim: inline == termcaps.InlineKitty && useSoftwareAnimation(),
+		useSoftwareAnim: inline == termcaps.InlineSixel || (inline == termcaps.InlineKitty && useSoftwareAnimation()),
 		useColor:        opts.Color != "never",
 		opts:            opts,
 	}
@@ -223,7 +224,7 @@ func errUnsupportedInline(getenv func(string) string) error {
 	termProgram := strings.TrimSpace(getenv("TERM_PROGRAM"))
 	term := strings.TrimSpace(getenv("TERM"))
 	return fmt.Errorf(
-		"gifgrep tui needs inline image support.\n\nSupported terminals:\n  - Kitty (Kitty graphics protocol)\n  - Ghostty (Kitty graphics protocol)\n  - iTerm2 (OSC 1337 inline images)\n\nDetected:\n  TERM_PROGRAM=%q\n  TERM=%q\n\nSee: docs/kitty.md and docs/iterm.md\n\nTip: You can force detection with GIFGREP_INLINE=kitty|iterm|none",
+		"gifgrep tui needs inline image support.\n\nSupported terminals:\n  - Kitty (Kitty graphics protocol)\n  - Ghostty (Kitty graphics protocol)\n  - iTerm2 (OSC 1337 inline images)\n  - Windows Terminal / WezTerm with Sixel\n\nDetected:\n  TERM_PROGRAM=%q\n  TERM=%q\n\nSee: docs/kitty.md, docs/iterm.md, and docs/sixel.md\n\nTip: You can force detection with GIFGREP_INLINE=kitty|iterm|sixel|none",
 		termProgram,
 		term,
 	)
@@ -892,7 +893,7 @@ func drawPreview(state *appState, out *bufio.Writer, cols, rows int, row, col in
 	if len(state.currentAnim.Frames) == 0 {
 		return
 	}
-	if state.useSoftwareAnim && len(state.currentAnim.Frames) > 1 {
+	if state.useSoftwareAnim {
 		drawPreviewSoftware(state, out, cols, rows, row, col)
 		return
 	}
@@ -931,7 +932,7 @@ func drawPreviewSoftware(state *appState, out *bufio.Writer, cols, rows int, row
 	if state.currentAnim == nil || len(state.currentAnim.Frames) == 0 {
 		return
 	}
-	if state.activeImageID != 0 && state.activeImageID != state.currentAnim.ID {
+	if state.inline == termcaps.InlineKitty && state.activeImageID != 0 && state.activeImageID != state.currentAnim.ID {
 		kitty.DeleteImage(out, state.activeImageID)
 	}
 	state.activeImageID = state.currentAnim.ID
@@ -939,10 +940,7 @@ func drawPreviewSoftware(state *appState, out *bufio.Writer, cols, rows int, row
 		state.manualAnim = true
 		state.manualFrame = 0
 		frame := state.currentAnim.Frames[state.manualFrame]
-		saveCursor(out)
-		moveCursor(out, row, col)
-		kitty.SendFrame(out, state.activeImageID, frame, cols, rows)
-		restoreCursor(out)
+		sendPreviewFrame(state, out, frame, cols, rows, row, col)
 		state.manualNext = time.Now().Add(frame.Delay)
 		state.previewNeedsSend = false
 		state.previewDirty = false
@@ -952,14 +950,27 @@ func drawPreviewSoftware(state *appState, out *bufio.Writer, cols, rows int, row
 	}
 	if state.previewDirty || state.lastPreview.cols != cols || state.lastPreview.rows != rows {
 		frame := state.currentAnim.Frames[state.manualFrame]
-		saveCursor(out)
-		moveCursor(out, row, col)
-		kitty.SendFrame(out, state.activeImageID, frame, cols, rows)
-		restoreCursor(out)
+		sendPreviewFrame(state, out, frame, cols, rows, row, col)
 		state.previewDirty = false
 		state.lastPreview.cols = cols
 		state.lastPreview.rows = rows
 	}
+}
+
+var sendSixelFrameFn = sixelgfx.SendFrame
+
+func sendPreviewFrame(state *appState, out *bufio.Writer, frame gifdecode.Frame, cols, rows int, row, col int) {
+	if state.inline == termcaps.InlineSixel {
+		clearItermRectFn(out, row, col, cols, rows)
+	}
+	saveCursor(out)
+	moveCursor(out, row, col)
+	if state.inline == termcaps.InlineSixel {
+		_ = sendSixelFrameFn(out, frame, cols, rows)
+	} else {
+		kitty.SendFrame(out, state.activeImageID, frame, cols, rows)
+	}
+	restoreCursor(out)
 }
 
 func advanceManualAnimation(state *appState, out *bufio.Writer) {
@@ -981,10 +992,7 @@ func advanceManualAnimation(state *appState, out *bufio.Writer) {
 	}
 	state.manualFrame = (state.manualFrame + 1) % len(state.currentAnim.Frames)
 	frame := state.currentAnim.Frames[state.manualFrame]
-	saveCursor(out)
-	moveCursor(out, state.previewRow, state.previewCol)
-	kitty.SendFrame(out, state.activeImageID, frame, state.lastPreview.cols, state.lastPreview.rows)
-	restoreCursor(out)
+	sendPreviewFrame(state, out, frame, state.lastPreview.cols, state.lastPreview.rows, state.previewRow, state.previewCol)
 	state.manualNext = now.Add(frame.Delay)
 	_ = out.Flush()
 }

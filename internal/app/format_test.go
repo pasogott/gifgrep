@@ -146,6 +146,46 @@ func TestRenderPlainThumbsItermUsesRawGIF(t *testing.T) {
 	}
 }
 
+func TestRenderPlainThumbsSixelDecodesFirstFrame(t *testing.T) {
+	prevFetch := fetchThumb
+	prevDecode := decodeThumb
+	prevSend := sendThumbSixel
+	t.Cleanup(func() {
+		fetchThumb = prevFetch
+		decodeThumb = prevDecode
+		sendThumbSixel = prevSend
+	})
+
+	fetchThumb = func(_ string) ([]byte, error) { return []byte("gif"), nil }
+	decodeThumb = func(_ []byte) (*gifdecode.Frames, error) {
+		return &gifdecode.Frames{Frames: []gifdecode.Frame{{PNG: []byte{1, 2, 3}}}}, nil
+	}
+	sendThumbSixel = func(out *bufio.Writer, frame gifdecode.Frame, cols, rows int) error {
+		if string(frame.PNG) != string([]byte{1, 2, 3}) {
+			t.Fatalf("unexpected frame")
+		}
+		if cols <= 0 || rows <= 0 {
+			t.Fatalf("expected positive size, got %dx%d", cols, rows)
+		}
+		_, _ = fmt.Fprint(out, "<SIXEL>")
+		return nil
+	}
+
+	var buf bytes.Buffer
+	out := bufio.NewWriter(&buf)
+
+	renderPlain(out, model.Options{}, false, termcaps.InlineSixel, []model.Result{
+		{Title: "A", URL: "https://example.test/a.gif"},
+	}, 80)
+	_ = out.Flush()
+
+	text := strings.ReplaceAll(buf.String(), "\x1b7", "")
+	text = strings.ReplaceAll(text, "\x1b8", "")
+	if !strings.Contains(text, "<SIXEL>") {
+		t.Fatalf("expected sixel marker: %q", text)
+	}
+}
+
 func TestRenderPlainThumbsItermWrapsURLToTerminalWidth(t *testing.T) {
 	prevFetch := fetchThumb
 	prevSend := sendThumbIterm

@@ -16,6 +16,20 @@ func TestDetectInlineOverride(t *testing.T) {
 	}
 }
 
+func TestDetectInlineSixelOverride(t *testing.T) {
+	getenv := func(k string) string {
+		switch k {
+		case "GIFGREP_INLINE":
+			return "sixel"
+		default:
+			return ""
+		}
+	}
+	if got := DetectInline(getenv); got != InlineSixel {
+		t.Fatalf("expected sixel, got %v", got)
+	}
+}
+
 func TestDetectInlineKittyEnv(t *testing.T) {
 	getenv := func(k string) string {
 		switch k {
@@ -29,6 +43,20 @@ func TestDetectInlineKittyEnv(t *testing.T) {
 	}
 	if got := DetectInline(getenv); got != InlineKitty {
 		t.Fatalf("expected kitty, got %v", got)
+	}
+}
+
+func TestDetectInlineWindowsTerminalUsesSixel(t *testing.T) {
+	getenv := func(k string) string {
+		switch k {
+		case "WT_SESSION":
+			return "abc"
+		default:
+			return ""
+		}
+	}
+	if got := DetectInline(getenv); got != InlineSixel {
+		t.Fatalf("expected sixel, got %v", got)
 	}
 }
 
