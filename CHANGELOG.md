@@ -1,24 +1,33 @@
 # Changelog
 
-## Unreleased
+## 0.3.1 - 2026-08-28
+
+### Highlights
+
+Fixes TUI clipboard-copy hangs on Linux and lets you copy loaded previews before full-resolution downloads finish.
 
 ### Fixes
 
 - TUI: fix clipboard copy hanging on background clipboard owners, prefer `wl-copy` on Wayland while preserving `xclip` on X11, and allow copying loaded previews before prefetch completes. Thanks @kikeijuu (#9).
 
-### Dev
-
-- Update Go dependencies and the Go 1.27.0 toolchain, refresh Playwright with an npm lockfile, and update CI tools and GitHub Actions.
-
 ### Docs
 
 - Rewrite the README around installation, first use, and links to the full documentation.
 - Replace the GitHub Pages landing page with a generated docs site.
+- Sync the generated installation and development docs, and correct the source-build example.
 - Refresh the TUI screenshot with a Ghostty capture from a macOS Crabbox.
 - Add the Ghostty capture video to the homepage.
 - Move the homepage demo video above the command sample.
 - Fold the homepage `gifgrep` title into the hero to avoid duplicate intro copy.
 - Highlight the homepage command sample.
+
+### Dependencies
+
+- Update Go dependencies and the Go 1.27.0 toolchain, and refresh Playwright with an npm lockfile.
+
+### Dev
+
+- Update CI tools and GitHub Actions.
 
 ## 0.3.0 - 2026-05-10
 

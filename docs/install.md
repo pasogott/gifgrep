@@ -38,7 +38,7 @@ Unpack, drop the binary on your `PATH`, done.
 ```bash
 git clone https://github.com/steipete/gifgrep.git
 cd gifgrep
-make build       # builds ./bin/gifgrep
+go build -o bin/gifgrep ./cmd/gifgrep
 ./bin/gifgrep --version
 ```
 
@@ -49,7 +49,7 @@ gifgrep --version
 gifgrep --help
 ```
 
-If `--version` prints something like `gifgrep 0.2.x`, you're good. Continue to the [Quickstart](quickstart.md).
+If `--version` prints `gifgrep 0.3.1`, you're good. Continue to the [Quickstart](quickstart.md).
 
 ## API keys (one-time)
 

@@ -21,6 +21,7 @@ Canonical documentation:
 - GIPHY provider: https://gifgrep.com/providers/giphy.html
 - KLIPY provider: https://gifgrep.com/providers/klipy.html
 - GIF sources + licensing: https://gifgrep.com/gif-sources.html
+- Development: https://gifgrep.com/development.html
 
 Install:
 - brew install steipete/tap/gifgrep
