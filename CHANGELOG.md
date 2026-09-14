@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.4.3 - Unreleased
+
 ## 0.4.2 - 2026-09-13
 
 **Highlights:** TUI selection, Escape, and download handling are fixed; API keys never leak into transport errors.
