@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.4.4 - Unreleased
+
 ## 0.4.3 - 2026-09-14
 
 **Highlights:** macOS downloads are signed and notarized.
