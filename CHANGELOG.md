@@ -2,6 +2,8 @@
 
 ## 0.4.6 - Unreleased
 
+- Decoding: enforce preview frame caps before allocating GIF frames, including malformed tails, while preserving complete-animation extraction. Thanks @SebTardif (#40).
+
 ## 0.4.5 - 2026-10-20
 
 **Highlights:** Fix certificate validation vulnerability GO-2026-6809 in release binaries.

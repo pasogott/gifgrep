@@ -51,7 +51,11 @@ func decodeBytes(data []byte, opts Options) (*Frames, error) {
 			return nil, ErrTooLarge
 		}
 	}
-	g, err := gif.DecodeAll(bytes.NewReader(data))
+	limited, err := limitGIFFrames(data, opts.MaxFrames)
+	var g *gif.GIF
+	if err == nil {
+		g, err = gif.DecodeAll(bytes.NewReader(limited))
+	}
 	if err != nil {
 		if opts.StrictGIF {
 			return nil, err
